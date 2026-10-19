@@ -1,0 +1,237 @@
+{
+ "trashcan_images": 7212,
+ "minitrash_train": {
+  "n": 603,
+  "corr>=0.99": 59,
+  "corr>=0.95": 152,
+  "corr>=0.90": 222,
+  "corr>=0.80": 341,
+  "dhash<=5": 293,
+  "dhash<=10": 476,
+  "median_best_corr": 0.8249704837799072
+ },
+ "minitrash_val": {
+  "n": 201,
+  "corr>=0.99": 20,
+  "corr>=0.95": 61,
+  "corr>=0.90": 84,
+  "corr>=0.80": 118,
+  "dhash<=5": 90,
+  "dhash<=10": 151,
+  "median_best_corr": 0.8411560654640198
+ },
+ "minitrash_test": {
+  "n": 202,
+  "corr>=0.99": 18,
+  "corr>=0.95": 39,
+  "corr>=0.90": 64,
+  "corr>=0.80": 108,
+  "dhash<=5": 86,
+  "dhash<=10": 157,
+  "median_best_corr": 0.8223577737808228
+ },
+ "minitrash_all": {
+  "n": 1006,
+  "corr>=0.99": 97,
+  "corr>=0.95": 252,
+  "corr>=0.90": 370,
+  "corr>=0.80": 567,
+  "dhash<=5": 469,
+  "dhash<=10": 784,
+  "median_best_corr": 0.8257357478141785
+ },
+ "calibration_test_to_train_minitrash": {
+  "n": 202,
+  "corr>=0.95": 49,
+  "corr>=0.90": 72,
+  "median_best_corr": 0.8215801119804382
+ },
+ "trashcan_videos": 312,
+ "top_pairs": [
+  {
+   "minitrash": "bio0018_frame0000001.jpg",
+   "split": "val",
+   "trashcan": "train__vid_000435_frame0000001.jpg",
+   "corr": 1.0,
+   "dhash": 0
+  },
+  {
+   "minitrash": "obj1050_frame0000001.jpg",
+   "split": "train",
+   "trashcan": "val__vid_000214_frame0000001.jpg",
+   "corr": 1.0,
+   "dhash": 0
+  },
+  {
+   "minitrash": "bio0014_frame0000001.jpg",
+   "split": "test",
+   "trashcan": "train__vid_000421_frame0000001.jpg",
+   "corr": 1.0,
+   "dhash": 0
+  },
+  {
+   "minitrash": "bio0004_frame0000051.jpg",
+   "split": "train",
+   "trashcan": "train__vid_000431_frame0000007.jpg",
+   "corr": 1.0,
+   "dhash": 0
+  },
+  {
+   "minitrash": "obj1080_frame0000001.jpg",
+   "split": "train",
+   "trashcan": "train__vid_000171_frame0000001.jpg",
+   "corr": 1.0,
+   "dhash": 0
+  },
+  {
+   "minitrash": "bio0001_frame0000081.jpg",
+   "split": "train",
+   "trashcan": "train__vid_000428_frame0000010.jpg",
+   "corr": 1.0,
+   "dhash": 0
+  },
+  {
+   "minitrash": "obj1246_frame0000001.jpg",
+   "split": "train",
+   "trashcan": "train__vid_000550_frame0000001.jpg",
+   "corr": 1.0,
+   "dhash": 0
+  },
+  {
+   "minitrash": "bio0010_frame0000001.jpg",
+   "split": "val",
+   "trashcan": "train__vid_000433_frame0000001.jpg",
+   "corr": 1.0,
+   "dhash": 0
+  },
+  {
+   "minitrash": "bio0000_frame0000001.jpg",
+   "split": "train",
+   "trashcan": "train__vid_000445_frame0000001.jpg",
+   "corr": 1.0,
+   "dhash": 0
+  },
+  {
+   "minitrash": "bio0004_frame0000011.jpg",
+   "split": "train",
+   "trashcan": "train__vid_000431_frame0000003.jpg",
+   "corr": 1.0,
+   "dhash": 0
+  },
+  {
+   "minitrash": "bio0018_frame0000121.jpg",
+   "split": "train",
+   "trashcan": "train__vid_000435_frame0000014.jpg",
+   "corr": 1.0,
+   "dhash": 0
+  },
+  {
+   "minitrash": "obj1038_frame0000002.jpg",
+   "split": "test",
+   "trashcan": "train__vid_000204_frame0000002.jpg",
+   "corr": 1.0,
+   "dhash": 0
+  },
+  {
+   "minitrash": "bio0018_frame0000141.jpg",
+   "split": "train",
+   "trashcan": "train__vid_000435_frame0000016.jpg",
+   "corr": 1.0,
+   "dhash": 0
+  },
+  {
+   "minitrash": "obj1603_frame0000008.jpg",
+   "split": "train",
+   "trashcan": "train__vid_000123_frame0000004.jpg",
+   "corr": 1.0,
+   "dhash": 1
+  },
+  {
+   "minitrash": "obj1626_frame0000036.jpg",
+   "split": "train",
+   "trashcan": "train__vid_000138_frame0000013.jpg",
+   "corr": 1.0,
+   "dhash": 1
+  },
+  {
+   "minitrash": "obj1604_frame0000005.jpg",
+   "split": "val",
+   "trashcan": "train__vid_000126_frame0000003.jpg",
+   "corr": 1.0,
+   "dhash": 1
+  },
+  {
+   "minitrash": "obj1061_frame0000097.jpg",
+   "split": "train",
+   "trashcan": "val__vid_000112_frame0000034.jpg",
+   "corr": 1.0,
+   "dhash": 1
+  },
+  {
+   "minitrash": "obj1246_frame0000059.jpg",
+   "split": "train",
+   "trashcan": "train__vid_000550_frame0000021.jpg",
+   "corr": 1.0,
+   "dhash": 0
+  },
+  {
+   "minitrash": "obj1038_frame0000038.jpg",
+   "split": "train",
+   "trashcan": "train__vid_000204_frame0000020.jpg",
+   "corr": 1.0,
+   "dhash": 3
+  },
+  {
+   "minitrash": "obj1502_frame0000263.jpg",
+   "split": "val",
+   "trashcan": "train__vid_000080_frame0000089.jpg",
+   "corr": 1.0,
+   "dhash": 1
+  },
+  {
+   "minitrash": "obj1302_frame0000314.jpg",
+   "split": "train",
+   "trashcan": "train__vid_000350_frame0000106.jpg",
+   "corr": 1.0,
+   "dhash": 1
+  },
+  {
+   "minitrash": "bio0004_frame0000301.jpg",
+   "split": "val",
+   "trashcan": "train__vid_000431_frame0000032.jpg",
+   "corr": 1.0,
+   "dhash": 1
+  },
+  {
+   "minitrash": "obj1603_frame0000038.jpg",
+   "split": "train",
+   "trashcan": "train__vid_000123_frame0000014.jpg",
+   "corr": 1.0,
+   "dhash": 1
+  },
+  {
+   "minitrash": "obj1080_frame0000037.jpg",
+   "split": "train",
+   "trashcan": "train__vid_000171_frame0000014.jpg",
+   "corr": 1.0,
+   "dhash": 4
+  },
+  {
+   "minitrash": "obj1344_frame0000200.jpg",
+   "split": "test",
+   "trashcan": "train__vid_000539_frame0000068.jpg",
+   "corr": 1.0,
+   "dhash": 1
+  }
+ ],
+ "best_corr_hist": [
+  18,
+  60,
+  138,
+  223,
+  197,
+  118,
+  155,
+  97
+ ]
+}

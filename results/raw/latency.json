@@ -1,0 +1,30 @@
+{
+ "YOLOv11n": {
+  "params_M": 2.583,
+  "gpu": "NVIDIA GeForce RTX 4070 Ti SUPER",
+  "blocks": 30,
+  "iters": 100,
+  "fp32_ms": 2.77,
+  "fp32_fps": 361.7,
+  "fp32_med_ms": 8.53,
+  "fp32_graph_ms": 1.14,
+  "fp16_ms": 2.98,
+  "fp16_fps": 335.1,
+  "fp16_med_ms": 8.98,
+  "fp16_graph_ms": 0.89
+ },
+ "PWST-YOLOv11 (original)": {
+  "params_M": 2.474,
+  "gpu": "NVIDIA GeForce RTX 4070 Ti SUPER",
+  "blocks": 30,
+  "iters": 100,
+  "fp32_ms": 3.57,
+  "fp32_fps": 280.1,
+  "fp32_med_ms": 9.98,
+  "fp32_graph_ms": 1.5,
+  "fp16_ms": 3.85,
+  "fp16_fps": 259.6,
+  "fp16_med_ms": 10.53,
+  "fp16_graph_ms": 1.14
+ }
+}

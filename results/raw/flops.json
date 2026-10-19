@@ -1,0 +1,80 @@
+{
+ "YOLOv11n": {
+  "params_M": 2.59,
+  "GFLOPs": 6.44,
+  "GMACs": 3.22,
+  "nc": 3
+ },
+ "PWST-YOLOv11 (original)": {
+  "params_M": 2.481,
+  "GFLOPs": 10.1,
+  "GMACs": 5.05,
+  "nc": 3
+ },
+ "pw_A": {
+  "params_M": 3.66,
+  "GFLOPs": 7.13,
+  "GMACs": 3.56,
+  "nc": 3
+ },
+ "pw_B": {
+  "params_M": 3.667,
+  "GFLOPs": 7.5,
+  "GMACs": 3.75,
+  "nc": 3
+ },
+ "pw_C": {
+  "params_M": 3.714,
+  "GFLOPs": 7.48,
+  "GMACs": 3.74,
+  "nc": 3
+ },
+ "pw_D": {
+  "params_M": 3.248,
+  "GFLOPs": 6.81,
+  "GMACs": 3.4,
+  "nc": 3
+ },
+ "pw_E": {
+  "params_M": 3.446,
+  "GFLOPs": 6.78,
+  "GMACs": 3.39,
+  "nc": 3
+ },
+ "pw_F": {
+  "params_M": 3.023,
+  "GFLOPs": 6.93,
+  "GMACs": 3.46,
+  "nc": 3
+ },
+ "pw_G": {
+  "params_M": 3.085,
+  "GFLOPs": 7.41,
+  "GMACs": 3.71,
+  "nc": 3
+ },
+ "pw_H": {
+  "params_M": 3.106,
+  "GFLOPs": 7.09,
+  "GMACs": 3.55,
+  "nc": 3
+ },
+ "pw_I": {
+  "params_M": 3.66,
+  "GFLOPs": 7.13,
+  "GMACs": 3.56,
+  "nc": 3
+ },
+ "pw_W": {
+  "params_M": 3.21,
+  "GFLOPs": 7.5,
+  "GMACs": 3.75,
+  "nc": 3
+ },
+ "PWST-YOLOv11 (full PWAM)": {
+  "params_M": 2.484,
+  "GFLOPs": 10.2,
+  "GMACs": 5.1,
+  "nc": 3
+ }
+}

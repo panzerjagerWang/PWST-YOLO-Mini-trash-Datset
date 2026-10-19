@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PWST-YOLO Project Page</title>
+<meta name="description" content="Project page of PWST-YOLO: phase-aware wave-like aggregation and space-reduction attention for underwater debris detection.">
+<style>
+:root{--bg:#fbfbfa;--fg:#1c2430;--mut:#5b6675;--card:#fff;--line:#dfe3e8;--acc:#0b6e99;--acc2:#e8f3f8;--warn:#fff4d6;--warnl:#e6c767}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#10151b;--fg:#e6eaef;--mut:#9aa6b4;--card:#171e26;--line:#2a3441;--acc:#6cc4ea;--acc2:#12303d;--warn:#3a3118;--warnl:#7a6525}}
+:root[data-theme="dark"]{--bg:#10151b;--fg:#e6eaef;--mut:#9aa6b4;--card:#171e26;--line:#2a3441;--acc:#6cc4ea;--acc2:#12303d;--warn:#3a3118;--warnl:#7a6525}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.65 system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans",sans-serif}
+.wrap{max-width:980px;margin:0 auto;padding:0 16px}
+header{padding:48px 0 28px;border-bottom:1px solid var(--line)}
+h1{font-size:clamp(1.6rem,4vw,2.3rem);line-height:1.2;margin:0 0 12px}
+.authors{color:var(--mut);margin:0}
+.btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+.btns a{padding:8px 14px;border:1px solid var(--acc);color:var(--acc);border-radius:8px;text-decoration:none;font-weight:600;font-size:.95rem}
+.btns a:hover{background:var(--acc2)}
+nav{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+nav .wrap{display:flex;gap:18px;overflow-x:auto;padding:10px 16px;white-space:nowrap}
+nav a{color:var(--mut);text-decoration:none;font-size:.92rem}
+nav a:hover{color:var(--acc)}
+section{padding:34px 0 6px}
+h2{font-size:1.4rem;margin:0 0 12px}
+h3{font-size:1.05rem;margin:22px 0 6px}
+figure{margin:18px 0;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px}
+figure img{max-width:100%;height:auto;display:block;margin:0 auto}
+figcaption{color:var(--mut);font-size:.9rem;margin-top:8px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:16px 0}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px}
+.stat b{display:block;font-size:1.7rem;color:var(--acc)}
+.stat span{color:var(--mut);font-size:.9rem}
+table{border-collapse:collapse;width:100%;background:var(--card);border:1px solid var(--line);font-size:.93rem}
+th,td{padding:7px 10px;border-bottom:1px solid var(--line);text-align:right}
+th:first-child,td:first-child{text-align:left}
+thead th{background:var(--acc2)}
+tr.ours td{font-weight:700}
+.tblwrap{overflow-x:auto;margin:12px 0}
+.note{background:var(--warn);border:1px solid var(--warnl);border-radius:10px;padding:12px 14px;margin:16px 0}
+code,pre{font-family:ui-monospace,Consolas,monospace;font-size:.88rem}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:12px;overflow-x:auto}
+footer{padding:30px 0 50px;color:var(--mut);font-size:.9rem;border-top:1px solid var(--line);margin-top:34px}
+.theme{float:right;background:none;border:1px solid var(--line);color:var(--mut);border-radius:8px;padding:4px 10px;cursor:pointer}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+<button class="theme" id="theme" aria-label="Toggle theme">Theme</button>
+<h1>Enhancing Underwater Object Detection via Phase-Aware Wave-like Aggregation and Space-Reduction Attention</h1>
+<p class="authors">Jiaqing Wang, Baichuan Zeng, Hexiong Zhou*, Zheng Zeng* &middot; Shanghai Jiao Tong University &amp; The Chinese University of Hong Kong</p>
+<p class="authors">Under revision at IEEE Journal of Oceanic Engineering (manuscript 26-0110)</p>
+<div class="btns">
+<a href="https://github.com/panzerjagerWang/PWST-YOLO-Mini-trash-Datset">Code &amp; tutorial</a>
+<a href="https://github.com/panzerjagerWang/PWST-YOLO-Mini-trash-Datset/releases">Weights</a>
+<a href="supplementary.pdf">Supplementary material</a>
+<a href="#repro">Reproduce</a>
+</div>
+</div></header>
+
+<nav><div class="wrap">
+<a href="#overview">Overview</a><a href="#method">Method</a><a href="#data">Dataset</a><a href="#results">Results</a><a href="#qual">Qualitative</a><a href="#limits">Limitations</a><a href="#repro">Reproduce</a>
+</div></nav>
+
+<main class="wrap">
+
+<section id="overview">
+<h2>Overview</h2>
+<p>PWST-YOLO inserts two modules into YOLO detectors for underwater debris: <b>PWAM</b>, a phase-aware amplitude/phase aggregation block that replaces selected convolutions, and <b>SRAW-TM</b>, a Transformer block with space-reduction attention that replaces down-sampling. We evaluate on our <b>mini-Trash</b> dataset (1006 J-EDI images, 3 classes) and on TrashCan.</p>
+<div class="grid">
+<div class="stat"><b>89.3%</b><span>YOLOv11n test mAP50 over 8 seeds in the controlled re-run (&plusmn; 1.1); of the 5 module variants, higher than YOLOv11n in test mAP50: SRAW-TM at P4/P5 +1.3 pts (Welch p = 0.011, uncorrected) and SRA-only at P4/P5 +1.3 pts (Welch p = 0.016, uncorrected); replication with 5 new seeds each: SRAW-TM at P4/P5 +0.4 pts (p = 0.531) and SRA-only at P4/P5 +0.4 pts (p = 0.572)</span></div>
+<div class="stat"><b>&minus;2.8 pts</b><span>original PWST-YOLOv11 vs. YOLOv11n, same protocol, mean test mAP50 over 3 seeds (Welch p = 0.015)</span></div>
+<div class="stat"><b>+3.3 pts</b><span>test mAP50-95 of YOLOv11n from removing mixup and shear (mAP50 unchanged; 5 seeds)</span></div>
+<div class="stat"><b>+2.8 pts</b><span>mean mAP50 on twelve additional corruptions of YOLOv11n + AmpMix (parameter-free, training-time; light-augmentation recipe, 5 seeds each; Welch p = 0.014)</span></div>
+<div class="stat"><b>+1.3 pts</b><span>mean mAP50 on the nine named corruptions (blur, contrast reduction, haze) of YOLOv11n with a gated input standardization (GIN; hypothesis fixed beforehand, 10 new seeds, Welch p = 0.008); clean mAP50 -0.1 pts (p = 0.87)</span></div>
+<div class="stat"><b>52.4%</b><span>YOLOv11n test mAP50 on a clip-level split (frame-level split: 89.3%)</span></div>
+<div class="stat"><b>9.6%</b><span>of the mini-Trash images have an essentially identical counterpart in TrashCan (97 of 1006)</span></div>
+</div>
+<div class="note"><b>Reading these numbers.</b> mini-Trash was split at the frame level; 96.5% of the test images come from a source clip that also appears in training, so the figures are in-distribution results (see <a href="#limits">Limitations</a>).</div>
+</section>
+
+<section id="method">
+<h2>Method</h2>
+<h3>PWAM: amplitude and phase</h3>
+<p>Each feature vector is a wave with amplitude <code>|z|</code> and phase <code>&theta;</code>. After Euler expansion, the output is a real-valued combination of <code>|z|cos&theta;</code> and <code>|z|sin&theta;</code>, so no complex tensor is formed and <b>no Fourier transform is involved</b>. The formulation follows WaveMLP (Tang et al., CVPR 2022); in our detector the weights mix channels at each position and the output enters through a zero-initialized residual gate.</p>
+<figure><img src="img/fig1_PWAM.png" alt="PWAM structure"><figcaption>PWAM: amplitude and phase are mapped to real and imaginary components and aggregated.</figcaption></figure>
+<h3>SRAW-TM</h3>
+<p>PWAM aggregation is followed by space-reduction attention (keys and values are shortened by a ratio R, reducing the attention matrix by R&sup2;). The encoder depth can be 3 instead of 6.</p>
+<figure><img src="img/Fig_Methods.png" alt="SRAW-TM structure"><figcaption>Transformer module based on PWAM and SRA.</figcaption></figure>
+<h3>Architectures</h3>
+<figure><img src="img/fig_yolov11Network.png" alt="PWST-YOLOv11"><figcaption>PWST-YOLOv11. The placement differs from PWST-YOLOv7, so PWST is a design pattern rather than a drop-in module.</figcaption></figure>
+<figure><img src="img/fig4_PWST-YOLOv7.png" alt="PWST-YOLOv7"><figcaption>PWST-YOLOv7.</figcaption></figure>
+</section>
+
+<section id="data">
+<h2>mini-Trash dataset</h2>
+<p>1006 frames extracted from JAMSTEC J-EDI deep-sea video, 480&times;320, annotated as <i>debris</i>, <i>bio</i> and <i>machine</i>. Split: 603 train / 201 val / 202 test images from 164 / 103 / 119 source clips.</p>
+<figure><img src="img/fig5_example.png" alt="Dataset examples"><figcaption>Examples of images and labels.</figcaption></figure>
+<div class="tblwrap"><table>
+<thead><tr><th>Near-duplicate check (test vs. train)</th><th>Images</th><th>Share</th></tr></thead>
+<tbody>
+<tr><td>Byte-identical to a training image</td><td>0 / 202</td><td>0%</td></tr>
+<tr><td>From a source clip that is also in training</td><td>195 / 202</td><td>96.5%</td></tr>
+<tr><td>Thumbnail correlation &ge; 0.95 with a training image</td><td>49 / 202</td><td>24.3%</td></tr>
+<tr><td>Thumbnail correlation &ge; 0.90 with a training image</td><td>72 / 202</td><td>35.6%</td></tr>
+<tr><td>dHash Hamming distance &le; 5 to a training image</td><td>73 / 202</td><td>36.1%</td></tr>
+</tbody></table></div>
+</section>
+
+<section id="results">
+<h2>Results</h2>
+<h3>Comparison on mini-Trash</h3>
+<div class="tblwrap"><table>
+<thead><tr><th>Model</th><th>P (%)</th><th>R (%)</th><th>mAP50 (%)</th><th>Params (M)</th><th>FLOPs (G)</th></tr></thead>
+<tbody>
+<tr><td>Faster R-CNN (ResNet50)</td><td>75.4</td><td>82.1</td><td>78.5</td><td>41.40</td><td>180.0</td></tr>
+<tr><td>DETR (ResNet-101)</td><td>80.1</td><td>76.8</td><td>81.5</td><td>60.20</td><td>152.0</td></tr>
+<tr><td>Deformable-DETR</td><td>81.5</td><td>78.2</td><td>82.8</td><td>39.80</td><td>173.0</td></tr>
+<tr><td>SSD (VGG16)</td><td>70.4</td><td>75.3</td><td>72.4</td><td>26.30</td><td>61.2</td></tr>
+<tr><td>YOLOv7</td><td>87.2</td><td>82.6</td><td>83.4</td><td>36.60</td><td>104.7</td></tr>
+<tr class="ours"><td>PWST-YOLOv7 (ours)</td><td>90.5</td><td>82.5</td><td>90.2</td><td>37.14</td><td>112.5</td></tr>
+<tr><td>YOLOv5nu</td><td>72.4</td><td>66.5</td><td>71.5</td><td>2.51</td><td>3.59</td></tr>
+<tr><td>YOLOv8n</td><td>81.5</td><td>77.2</td><td>81.0</td><td>3.01</td><td>4.10</td></tr>
+<tr><td>YOLOv11n</td><td>80.2</td><td>75.5</td><td>79.2</td><td>2.59</td><td>3.22</td></tr>
+<tr class="ours"><td>PWST-YOLOv11 (ours)</td><td>86.2</td><td>81.6</td><td>88.1</td><td>2.48</td><td>5.05</td></tr>
+</tbody></table></div>
+<h3>Controlled re-run under one protocol (revision)</h3>
+<p>300 epochs, batch 16, same augmentation, COCO-initialised weights where shapes match; model chosen on the validation split only. The 88.1% / 79.2% above are the previously reported numbers and are <b>not reproduced</b> under this protocol.</p>
+<div class="tblwrap"><table><thead><tr><th>Model</th><th>Params (M)</th><th>GMACs</th><th>val mAP50</th><th>test mAP50</th><th>test mAP50-95</th></tr></thead><tbody>
+<tr><td>YOLOv11n (8 runs)</td><td>2.59</td><td>3.22</td><td>82.6 &plusmn; 1.3</td><td>89.3 &plusmn; 1.1</td><td>60.7 &plusmn; 0.7</td></tr>
+<tr><td>PWST-YOLOv11, original configuration (3 runs)</td><td>2.48</td><td>5.05</td><td>76.6 &plusmn; 1.6</td><td>86.4 &plusmn; 1.0</td><td>50.4 &plusmn; 0.6</td></tr>
+<tr><td>SRAW-TM at P4/P5 (3 runs)</td><td>3.66</td><td>3.56</td><td>82.4 &plusmn; 0.2</td><td>90.6 &plusmn; 0.3</td><td>59.7 &plusmn; 0.9</td></tr>
+<tr><td>SRAW-TM at P4/P5 with early PWAM (SRAW-TM at P4/P5 + early PWAM) (3 runs)</td><td>3.67</td><td>3.75</td><td>81.0 &plusmn; 0.4</td><td>89.9 &plusmn; 0.6</td><td>60.3 &plusmn; 0.1</td></tr>
+<tr><td>SRA-only at P4/P5 (SRA only, no PWAM) (3 runs)</td><td>3.25</td><td>3.40</td><td>82.8 &plusmn; 1.1</td><td>90.6 &plusmn; 0.4</td><td>60.9 &plusmn; 0.4</td></tr>
+<tr><td>PWAM-only at P3-P5 (PWAM only, no SRA) (3 runs)</td><td>3.02</td><td>3.46</td><td>83.7 &plusmn; 1.1</td><td>90.0 &plusmn; 1.9</td><td>60.7 &plusmn; 1.5</td></tr>
+<tr><td>WaveMLP token mixing at P3-P5 (WaveMLP PATM at the PWAM-only at P3-P5 positions) (3 runs)</td><td>3.21</td><td>3.75</td><td>81.9 &plusmn; 1.5</td><td>89.5 &plusmn; 0.8</td><td>60.8 &plusmn; 1.3</td></tr>
+</tbody></table></div>
+<div class="note"><b>Technical improvement of the revision.</b> A gated input standardization (GIN): the image is standardized per channel and blended with itself by a learnable gate (three parameters, initialized at 0.5, active at training and inference); the rest of YOLOv11n is unchanged (2.59 M parameters). Its effect was tested as a single hypothesis fixed before the runs: with light augmentation and 10 new seeds the mean mAP50 on the nine named corruptions rises from 82.7% to 84.0% (+1.3 pts, Welch p = 0.008, level 0.05), while the clean test mAP50 does not change significantly (-0.1 pts, p = 0.87) and the twelve additional corruptions do not improve (-0.8 pts, p = 0.26). It is a robustness effect and not an accuracy gain; none of the 25 further candidates that were screened (Supplementary Material) improved the clean test mAP50 in a confirmation with new seeds.</div>
+<div class="note"><b>Other revision results.</b> Clip-level split (test mAP50): YOLOv11n 52.4 &plusmn; 2.2, PWST-YOLOv11 43.8 &plusmn; 1.2 (8 and 3 seeds). Amplitude/phase ablation of the full PWAM inserted at P3-P5 (PWAM-only at P3-P5; test mAP50): full 90.0 &plusmn; 1.9, amplitude only 90.7 &plusmn; 1.2, phase only 88.9 &plusmn; 0.7 (3 seeds each). Latency (NVIDIA GeForce RTX 4070 Ti SUPER, batch 1, 640x640, network forward pass): YOLOv11n 2.77 ms, PWST-YOLOv11 3.57 ms (FP32); no Jetson measurements. Overlap with TrashCan 1.0: 97 of 1006 mini-Trash images (test split: 18 of 202) have an essentially identical counterpart (thumbnail correlation &ge; 0.99), 252 (39) a near-duplicate (&ge; 0.95). AmpMix (light augmentation, 5 seeds each): twelve additional corruptions +2.8 pts (p = 0.014), nine named corruptions +1.6 pts (p = 0.09), clean test mAP50 +0.2 pts (p = 0.74). SRAW-TM at P4/P5 (SRAW-TM at P4/P5) + AmpMix vs. YOLOv11n + AmpMix: +1.8 pts on the twelve additional corruptions (p = 0.075); replication cohort (seeds 5&ndash;9): +2.1 pts (p = 0.072). Relative to YOLOv11n with the paper recipe (8 seeds), AmpMix with light augmentation: test mAP50-95 +3.6 pts (p = 0.000), twelve additional corruptions +6.9 pts (p = 0.000), test mAP50 +0.8 pts (p = 0.12); 3.3 pts of the mAP50-95 difference come from the recipe alone. Pre-registered confirmation with 10 new seeds (clean test mAP50, Bonferroni level 0.0167): SRAW-TM + AmpMix 89.8 &plusmn; 1.1, AmpMix 90.1 &plusmn; 0.9; SRAW-TM + AmpMix vs paper recipe +0.5 pts (p = 0.342), vs light augmentation -0.1 pts (p = 0.796), vs AmpMix -0.3 pts (p = 0.489). The gains of the modules are small compared with the originally reported ones (88.1 vs 79.2 mAP50), the original PWST-YOLOv11 configuration is below YOLOv11n, and the claims are limited to the settings reported.</div>
+</section>
+
+<section id="qual">
+<h2>Qualitative results</h2>
+<figure><img src="img/fig_heatmap.png" alt="Heat maps"><figcaption>Channel-mean feature-map activations of the Head_P4_Medium layer (min&ndash;max normalized, JET colormap). No gradient-based method is used.</figcaption></figure>
+<figure><img src="img/fig_detectionresult.png" alt="Detection results"><figcaption>Detections of YOLOv7, PWST-YOLOv7 and PWST-YOLOv11. The first row is the ground truth; examples were selected for illustration.</figcaption></figure>
+</section>
+
+<section id="limits">
+<h2>Limitations</h2>
+<ul>
+<li><b>Frame-level split.</b> Near-duplicate frames link training and test images; results are optimistic for unseen dives. A clip-level split script is provided.</li>
+<li><b>Shared source.</b> TrashCan is built from the same J-EDI imagery and is therefore a second benchmark from the same source, not out-of-domain evidence.</li>
+<li><b>Compute.</b> PWST-YOLOv11 has fewer parameters but 57% more FLOPs than YOLOv11n.</li>
+<li><b>Few seeds.</b> Three to ten seeds per model; the seed standard deviation is about 1&ndash;1.4 points of test mAP50 on 202 test images, so only differences of about 3&ndash;4 points are resolved; smaller effects of the modules cannot be excluded. TrashCan and YOLOv7 results are single runs from the earlier version.</li>
+<li><b>Not universal.</b> The module placement was re-designed for YOLOv7 and YOLOv11; a direct insertion into YOLOv26 was unstable.</li>
+</ul>
+</section>
+
+<section id="repro">
+<h2>Reproduce</h2>
+<p>Full tutorial in the <a href="https://github.com/panzerjagerWang/PWST-YOLO-Mini-trash-Datset#quick-start">README</a>. Tested with Python 3.12, PyTorch 2.11, Ultralytics 8.4.2.</p>
+<pre>pip install -r requirements.txt
+patch -p1 -d "$(python -c 'import ultralytics,os;print(os.path.dirname(os.path.dirname(ultralytics.__file__)))')" &lt; ultralytics_patch/pwst_ultralytics.patch   # register the modules
+unzip weights.zip -d weights                                    # from the GitHub release
+python train.py --cfg configs/x_gin5.yaml --data data.yaml --name x_gin5_lightaug --seed 90 --light-aug
+python scripts/eval_corruptions.py data.yaml robust.json x_gin5_la_s90=runs/x_gin5_lightaug_s90/weights/best.pt
+python scripts/analyze_gin.py                                  # the pre-registered test from the raw results</pre>
+</section>
+</main>
+
+<footer><div class="wrap">PWST-YOLO project page &middot; contact: zhou_hexiong@sjtu.edu.cn &middot; Supported by NKRDP 2023YFC2811103 and NSFC 42406183, 42576194.</div></footer>
+<script>
+(function(){var r=document.documentElement,b=document.getElementById('theme');
+try{var t=localStorage.getItem('theme');if(t)r.setAttribute('data-theme',t)}catch(e){}
+b.addEventListener('click',function(){var d=r.getAttribute('data-theme')==='dark'||(!r.getAttribute('data-theme')&&matchMedia('(prefers-color-scheme:dark)').matches);var n=d?'light':'dark';r.setAttribute('data-theme',n);try{localStorage.setItem('theme',n)}catch(e){}});})();
+</script>
+</body>
+</html>

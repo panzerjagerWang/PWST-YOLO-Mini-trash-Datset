@@ -1,0 +1,65 @@
+# Ultralytics YOLO 🚀, AGPL-3.0 license
+# YOLOv11n-P2-PWST-Lite
+# Features: P2 Head (Small Object) + Lite Custom Modules
+
+nc: 2
+scales:
+  n: [0.50, 0.25, 1024] 
+
+backbone:
+  # [from, repeats, module, args]
+  - [-1, 1, Conv, [64, 3, 2]] # 0
+  - [-1, 1, Conv, [128, 3, 2]] # 1
+  - [-1, 2, C3k2, [256, False, 0.25]] # 2
+  - [-1, 1, Conv, [256, 3, 2]] # 3
+  - [-1, 2, C3k2, [512, False, 0.25]] # 4
+  - [-1, 1, Conv, [512, 3, 2]] # 5
+  - [-1, 2, C3k2, [512, True]] # 6
+  - [-1, 1, Conv, [1024, 3, 2]] # 7
+  - [-1, 2, C3k2, [1024, True]] # 8
+  - [-1, 1, SPPF, [1024, 5]] # 9
+  
+  # [LITE MODULE] PWAM_Lite
+  # Uses depthwise convs, very low parameter cost.
+  - [-1, 1, PWAM_Lite, [1024]] # 10
+
+head:
+  # --- P5 Branch ---
+  - [-1, 1, nn.Upsample, [None, 2, "nearest"]]
+  - [[-1, 6], 1, Concat, [1]] 
+  - [-1, 2, C3k2, [512, False]] # 13
+
+  # --- P4 Branch ---
+  - [-1, 1, nn.Upsample, [None, 2, "nearest"]]
+  - [[-1, 4], 1, Concat, [1]] 
+  - [-1, 2, C3k2, [256, False]] # 16
+
+  # --- P2 Branch (Tiny Objects) ---
+  - [-1, 1, nn.Upsample, [None, 2, "nearest"]]
+  - [[-1, 2], 1, Concat, [1]] 
+  - [-1, 2, C3k2, [128, False]] # 19 (P2)
+
+  # --- Detect Heads ---
+  
+  # P2 Head
+  - [-1, 1, Conv, [128, 3, 2]]
+  - [[-1, 16], 1, Concat, [1]] 
+  - [-1, 2, C3k2, [256, False]] # 22 (P3)
+
+  # P3 Head
+  - [-1, 1, Conv, [256, 3, 2]]
+  - [[-1, 13], 1, Concat, [1]] 
+  - [-1, 2, C3k2, [512, False]] # 25 (P4)
+
+  # P4 Head
+  - [-1, 1, Conv, [512, 3, 2]]
+  - [[-1, 10], 1, Concat, [1]] # Cat with PWAM_Lite layer
+  
+  # [LITE MODULE] SRAW_TM_Lite
+  # Reduces channels internally by 50% before attention.
+  # Much smaller than standard SRAW_TM.
+  - [-1, 1, SRAW_TM_Lite, [1024]] # 28 (P5)
+
+  # Detect on 4 scales
+  - [[19, 22, 25, 28], 1, Detect, [nc]]
+
