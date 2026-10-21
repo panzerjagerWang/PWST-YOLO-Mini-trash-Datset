@@ -1,0 +1,104 @@
+{
+ "images": [
+  "vid_000040_frame0000018.jpg",
+  "vid_000094_frame0000068.jpg",
+  "vid_000130_frame0000015.jpg",
+  "vid_000161_frame0000014.jpg",
+  "vid_000285_frame0000092.jpg",
+  "vid_000343_frame0000026.jpg"
+ ],
+ "weights": {
+  "YOLOv11n": "/media/w/DATA1/Paper/JOE_paper/revision_runs/tclight_base_s10/weights/best.pt",
+  "GIN": "/media/w/DATA1/Paper/JOE_paper/revision_runs/tclight_gin5_s10/weights/best.pt"
+ },
+ "stats": {
+  "YOLOv11n": [
+   {
+    "image": "vid_000040_frame0000018.jpg",
+    "gt": 4,
+    "pred": 3,
+    "missed": 1,
+    "false_positive": 0
+   },
+   {
+    "image": "vid_000094_frame0000068.jpg",
+    "gt": 2,
+    "pred": 3,
+    "missed": 0,
+    "false_positive": 1
+   },
+   {
+    "image": "vid_000130_frame0000015.jpg",
+    "gt": 2,
+    "pred": 2,
+    "missed": 0,
+    "false_positive": 0
+   },
+   {
+    "image": "vid_000161_frame0000014.jpg",
+    "gt": 2,
+    "pred": 2,
+    "missed": 1,
+    "false_positive": 1
+   },
+   {
+    "image": "vid_000285_frame0000092.jpg",
+    "gt": 2,
+    "pred": 2,
+    "missed": 0,
+    "false_positive": 0
+   },
+   {
+    "image": "vid_000343_frame0000026.jpg",
+    "gt": 5,
+    "pred": 5,
+    "missed": 1,
+    "false_positive": 1
+   }
+  ],
+  "GIN": [
+   {
+    "image": "vid_000040_frame0000018.jpg",
+    "gt": 4,
+    "pred": 4,
+    "missed": 1,
+    "false_positive": 1
+   },
+   {
+    "image": "vid_000094_frame0000068.jpg",
+    "gt": 2,
+    "pred": 4,
+    "missed": 1,
+    "false_positive": 3
+   },
+   {
+    "image": "vid_000130_frame0000015.jpg",
+    "gt": 2,
+    "pred": 3,
+    "missed": 0,
+    "false_positive": 1
+   },
+   {
+    "image": "vid_000161_frame0000014.jpg",
+    "gt": 2,
+    "pred": 3,
+    "missed": 0,
+    "false_positive": 1
+   },
+   {
+    "image": "vid_000285_frame0000092.jpg",
+    "gt": 2,
+    "pred": 2,
+    "missed": 0,
+    "false_positive": 0
+   },
+   {
+    "image": "vid_000343_frame0000026.jpg",
+    "gt": 5,
+    "pred": 5,
+    "missed": 1,
+    "false_positive": 1
+   }
+  ]
+ }
+}

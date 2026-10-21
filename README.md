@@ -15,6 +15,7 @@ Underwater debris detection is hard because turbidity, backscatter and blur chan
 * The gains that were first reported for PWST-YOLOv11 (88.1 vs. 79.2 mAP50) are **not reproduced** in a controlled re-run (YOLOv11n: 89.3 ± 1.1 mAP50 over 8 seeds; the original configuration is 2.8 points lower).
 * **No module improved the clean test mAP50 of YOLOv11n significantly** in any pre-registered confirmation with new seeds (differences between −0.1 and +0.5 points, all p > 0.25).
 * What did hold up is a **robustness effect** of a tiny input module, the **gated input standardization (GIN)**: with light augmentation (no mixup, no shear) it raised the mean mAP50 on the nine *named* corruptions (blur, contrast reduction, haze) from 82.7 % to 84.0 % (**+1.3 points, Welch p = 0.008**; hypothesis and level fixed before the runs, 10 new seeds), without changing the clean accuracy (89.8 vs. 89.9 mAP50, p = 0.87). It does not help on the twelve additional corruptions (−0.8 points, p = 0.26).
+* On **TrashCan 1.0**, GIN with light augmentation was chosen among three candidates on the validation split and then compared with YOLOv11n under the same recipe over five new seeds (10–14): clean test mAP50 76.8 ± 4.1 vs. 74.1 ± 3.7 (+2.7 points, p = 0.30, not significant), nine named corruptions 54.4 ± 2.8 vs. 45.1 ± 3.7 (**+9.3 points, p = 0.002**), mostly under contrast reduction and haze; it is slightly lower under the strongest blur and defocus. This corruption comparison was not fixed before the runs. The re-run of the original PWST-YOLOv11 configuration on TrashCan (61.2 ± 5.7 vs. 63.8 ± 1.5 for YOLOv11n, three seeds) and all other TrashCan runs are in Supplementary S8.
 * Removing mixup and shear from the augmentation recipe raised the test mAP50-95 of YOLOv11n by 3.3 points; AmpMix (Fourier amplitude mixing, training only) raised the mean mAP50 on twelve additional corruptions by 2.8 points.
 * A data analysis of the benchmark: the frame-level split of mini-Trash puts near-duplicates of 24 % of the test frames into the training set; on a clip-level split the test mAP50 of all models is far lower (43.8–54.4 %).
 
@@ -54,7 +55,7 @@ git clone https://github.com/panzerjagerWang/PWST-YOLO-Mini-trash-Datset && cd P
 SITE=$(python -c "import ultralytics,os;print(os.path.dirname(os.path.dirname(ultralytics.__file__)))")
 patch -p1 -d "$SITE" < ultralytics_patch/pwst_ultralytics.patch
 
-# 3. use the weights (Releases -> weights.zip; 28 checkpoints, all seeds, with per-seed metrics and SHA-256 sums)
+# 3. use the weights (Releases -> weights.zip; 28 mini-Trash and 10 TrashCan checkpoints, all seeds, with per-seed metrics and SHA-256 sums)
 unzip weights.zip -d weights
 python - <<'PY'
 from ultralytics import YOLO
@@ -86,12 +87,14 @@ python scripts/eval_corruptions.py data.yaml robust.json x_gin5_la_s90=runs/x_gi
 
 **Statistics.** `python scripts/analyze_gin.py` recomputes the pre-registered test (primary endpoint: mean mAP50 over the nine named corruptions, Welch two-sided test, level 0.05) from `results/raw`. With your own runs, put them in the same JSON formats.
 
+**TrashCan 1.0.** `scripts/make_trashcan_yolo.py` converts the release to YOLO format, `scripts/run_trashcan.py NAME MODEL.yaml SEED 200` trains one model (200 epochs, SGD, batch 8, lr0 0.01 with cosine decay; `LIGHT=1` for light augmentation), `scripts/eval_trashcan.py` evaluates finished runs, and `scripts/tc_aggregate.py` and `scripts/tc_robust_aggregate.py` recompute the tables of Section IV-J and Supplementary S8 and S9 from `results/raw/summary_trashcan.jsonl` and `results/raw/robust_*.json`. The queue files `scripts/queue_tc_*.sh` list the runs in the order they were made; the selection rule of round 2 is in `preregistrations.txt`.
+
 **Other analyses.** `scripts/overlap_analysis.py` (near-duplicates between the splits), `scripts/group_split.py` (clip-level split), `scripts/trashcan_overlap.py` (mini-Trash vs. TrashCan 1.0), `scripts/bench_latency.py`, `scripts/count_flops.py`, `scripts/cv_eval.py` (clip-grouped cross-validation), `scripts/analyze_tc.py` (initialization from TrashCan).
 
 ## Notes on what the evidence supports
 
 * The GIN hypothesis was formulated after three earlier variants that contained GIN had shown the same direction on the nine named corruptions (as secondary, uncorrected observations) and **after about 25 candidates had been screened**; the supplementary material lists all of them. The confirmation uses new seeds and a single comparison, but the selection history should be kept in mind.
-* The effect is limited to blur, contrast reduction and haze; clean accuracy and the twelve additional corruptions are unchanged.
+* The effect is limited to blur, contrast reduction and haze; clean accuracy and the twelve additional corruptions are unchanged. On TrashCan the gain comes from contrast reduction and haze, the seed standard deviation is about 4 points, and the clean accuracies of GIN and YOLOv11n cannot be distinguished with five seeds.
 * The benchmark is small (202 test images) and frame-level split; see the data analysis in the paper before drawing conclusions about generalization to new sites.
 
 ## License
