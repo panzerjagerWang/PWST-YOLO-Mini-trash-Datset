@@ -17,7 +17,7 @@ for k, y in CFG.items():
         n = sum(p.numel() for p in net.parameters())
         f = get_flops(net, 640)
         rec = {'params_M': round(n / 1e6, 3), 'GFLOPs': round(f, 2), 'GMACs': round(f / 2, 2), 'nc': 3}
-        print(k, rec, 'previous:', out.get(k), flush=True)
+        print(k, rec, 'stored:', out.get(k), flush=True)
         if k not in out:
             out[k] = rec
     except Exception as e:

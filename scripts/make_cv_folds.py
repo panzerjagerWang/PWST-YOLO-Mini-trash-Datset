@@ -1,7 +1,7 @@
 """Source-clip-grouped 4-fold cross-validation pool for module design (CPU only, symlinks).
 
-Pool = images of the ORIGINAL train and validation splits whose source clip does not occur in the test split of the clip-level split
-(revision_runs/clipsplit/test).  Hence neither the original test split (202 images, not in the pool) nor the clip-level test split
+Pool = images of the frame-level train and validation splits whose source clip does not occur in the test split of the clip-level split
+(revision_runs/clipsplit/test).  Hence neither the frame-level test split (202 images, not in the pool) nor the clip-level test split
 (its clips are excluded) is touched by any design decision.  Folds are made of whole clips (greedy balancing of image count and of
 'bio' clips).  Output: revision_runs/cv/f{k}/{train,val,test}/{images,labels}; test is a link to val (the trainer needs a test key).
 usage: python make_cv_folds.py [K=4] [SEED=0]"""

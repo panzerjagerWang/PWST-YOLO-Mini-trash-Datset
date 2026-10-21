@@ -13,7 +13,7 @@
   "fp16_med_ms": 8.98,
   "fp16_graph_ms": 0.89
  },
- "PWST-YOLOv11 (original)": {
+ "PWST-YOLOv11": {
   "params_M": 2.474,
   "gpu": "NVIDIA GeForce RTX 4070 Ti SUPER",
   "blocks": 30,

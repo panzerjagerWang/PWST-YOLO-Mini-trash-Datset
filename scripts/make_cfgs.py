@@ -31,7 +31,7 @@ for name, sub in VARIANTS.items():
     yaml.safe_dump(d, open(f'{CFG}/{name}.yaml', 'w'), sort_keys=False)
     print('wrote', name, sub)
 
-# combinations with the SRAW-TM variants (pw_A / pw_B yaml of the controlled re-run): AmpMix on the input of the first convolution
+# combinations with the SRAW-TM variants (pw_A / pw_B yaml of the ablation): AmpMix on the input of the first convolution
 for name, srcname in (('x_A_amp', 'pw_A_sraw57_nc3'), ('x_B_amp', 'pw_B_pw01_sraw57_nc3')):
     p_ = f'{CFG}/{srcname}.yaml'
     if not os.path.exists(p_):

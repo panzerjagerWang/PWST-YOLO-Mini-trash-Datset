@@ -4,7 +4,7 @@ Code, weights and reproduction material for the manuscript
 
 > **Enhancing Underwater Object Detection via Phase-Aware Wave-like Aggregation and Space-Reduction Attention**
 > Jiaqing Wang, Baichuan Zeng, Hexiong Zhou\*, Zheng Zeng\* (Shanghai Jiao Tong University; The Chinese University of Hong Kong)
-> submitted to *IEEE Journal of Oceanic Engineering* (manuscript 26-0110, under revision)
+> submitted to *IEEE Journal of Oceanic Engineering* (manuscript 26-0110)
 
 **Project page:** https://panzerjagerwang.github.io/PWST-YOLO-Mini-trash-Datset/ &nbsp;·&nbsp; **Weights:** [Releases](../../releases) &nbsp;·&nbsp; **Supplementary material:** [`docs/supplementary.pdf`](docs/supplementary.pdf)
 

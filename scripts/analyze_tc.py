@@ -1,7 +1,7 @@
 """Analysis of the TrashCan-initialisation experiment (the design was written to the queue file before the first run of it).
 Arms (seeds 20-27 each, all fine-tuned on mini-Trash with the protocol of Section IV-B):
-  B_TC  YOLOv11n, paper augmentation          L_TC  YOLOv11n, light augmentation          S_TC  SRAW-TM + AmpMix, light augmentation
-Primary endpoint: clean test mAP50 (Welch, two-sided). Confirmatory comparisons C1 B_TC vs paper recipe, C2 S_TC vs paper recipe, C3 S_TC vs L_TC,
+  B_TC  YOLOv11n, full augmentation           L_TC  YOLOv11n, light augmentation          S_TC  SRAW-TM + AmpMix, light augmentation
+Primary endpoint: clean test mAP50 (Welch, two-sided). Confirmatory comparisons C1 B_TC vs full augmentation, C2 S_TC vs full augmentation, C3 S_TC vs L_TC,
 Bonferroni level 0.05/3. Everything else is descriptive.   usage: python scripts/analyze_tc.py [--json]"""
 import json
 import math
@@ -15,11 +15,11 @@ from statutil import _ibeta, welch_p  # noqa: E402
 
 S, R = L.S, L.R
 GROUPS = [
-    ('paper', 'YOLOv11n, paper recipe, COCO init', ['yolo11n_base'], ['base']),
+    ('paper', 'YOLOv11n, full augmentation, COCO init', ['yolo11n_base'], ['base']),
     ('la', 'YOLOv11n, light aug., COCO init', ['base_lightaug', 'base_lightaug_rep'], ['base_la', 'base_la_rep']),
     ('amp', 'YOLOv11n + AmpMix, light aug., COCO init', ['x_amp_lightaug', 'x_amp_lightaug_rep', 'x_amp_lightaug_conf'], ['x_amp_la', 'x_amp_la_rep', 'x_amp_la_conf']),
     ('S', 'SRAW-TM + AmpMix, light aug., COCO init', ['x_A_amp_lightaug', 'x_A_amp_lightaug_rep', 'x_A_amp_lightaug_conf'], ['x_A_amp_la', 'x_A_amp_la_rep', 'x_A_amp_la_conf']),
-    ('B_TC', 'YOLOv11n, paper recipe, TrashCan init', ['tc_yolo11n_base'], ['tc_base']),
+    ('B_TC', 'YOLOv11n, full augmentation, TrashCan init', ['tc_yolo11n_base'], ['tc_base']),
     ('L_TC', 'YOLOv11n, light aug., TrashCan init', ['tc_base_lightaug'], ['tc_base_la']),
     ('S_TC', 'SRAW-TM + AmpMix, light aug., TrashCan init', ['tc_x_A_amp_lightaug'], ['tc_x_A_amp_la']),
 ]

@@ -1,15 +1,15 @@
 #!/bin/bash
 # one training job.  usage: queue_job.sh KEY:SEED:RECIPE
-#   KEY    base|F|A|B|C|D|E|G|H|I|P|W|V8full|V8amp|V8phase        (P = released PWST-YOLOv11 configuration, P2 head + PWAM_Lite)
-#   RECIPE uw    train set = original + 2 corrupted copies, paper augmentation (mixup .5, shear 20), 100 epochs
+#   KEY    base|F|A|B|C|D|E|G|H|I|P|W        (P = released PWST-YOLOv11 configuration, P2 head + PWAM_Lite)
+#   RECIPE uw    frame-level train set + 2 corrupted copies, full augmentation (mixup .5, shear 20), 100 epochs
 #          uwl   same train set, light augmentation (mixup 0, shear 0), 100 epochs
-#          la    original train set, light augmentation, 300 epochs
-#          orig  original train set, paper augmentation, 300 epochs
-#          corig clip-level split (revision_runs/clipsplit), paper augmentation, 300 epochs
+#          la    frame-level train set, light augmentation, 300 epochs
+#          orig  frame-level train set, full augmentation, 300 epochs
+#          corig clip-level split (revision_runs/clipsplit), full augmentation, 300 epochs
 #          cuwl  clip-level split + 2 degraded copies of every training image, light augmentation, 100 epochs
 #          cla   clip-level split, light augmentation (mixup 0, shear 0), 300 epochs
-#          nomix    original train set, mixup 0 / shear 20 (decomposition of 'la'), 300 epochs
-#          noshear  original train set, mixup 0.5 / shear 0 (decomposition of 'la'), 300 epochs
+#          nomix    frame-level train set, mixup 0 / shear 20 (decomposition of 'la'), 300 epochs
+#          noshear  frame-level train set, mixup 0.5 / shear 0 (decomposition of 'la'), 300 epochs
 #          cv[_V] fold SEED of the clip-grouped CV pool (revision_runs/cv_V, V=raw by default), light augmentation, 100 epochs
 cd /media/w/DATA1/Paper/JOE_paper
 PY=/home/w/miniconda3/envs/isaacsim6/bin/python
@@ -32,7 +32,6 @@ case $K in
   W)    Y=$R/cfg/pw_W_wpatm357.yaml;                 SN=pwW;             ON=pw_W_wpatm357;;   # WaveMLP PATM at the pw_F positions
   Famp)   Y=$R/cfg/pw_F_pw357.yaml;                    SN=pwFamp;          ON=pwF_amp;    export PWAM_MODE=amp;;     # pw_F with the phase of every PWAM fixed to zero (amplitude only)
   Fphase) Y=$R/cfg/pw_F_pw357.yaml;                    SN=pwFphase;        ON=pwF_phase;  export PWAM_MODE=phase;;   # pw_F with the amplitude of every PWAM fixed to one (phase only)
-  V8full|V8amp|V8phase) Y=/media/w/DATA1/Paper/JOE_paper/Code/dataset/yolov11n_pwstv8.yaml; SN=v8_${K#V8}; ON=v8_${K#V8}; export PWAM_MODE=${K#V8};;   # full-PWAM configuration, amplitude / phase ablation
   x_*)  Y=$R/cfg/$K.yaml;                            SN=$K;              ON=$K;;      # v3 modules (scripts/make_cfgs.py)
 esac
 case $RC in
@@ -40,9 +39,9 @@ case $RC in
   uwl)  export DATA_ROOT=/media/w/DATA1/Paper/JOE_paper/Code/dataset_uw DATA_TAG=uw MIXUP=0.0 SHEAR=0.0; NAME=${K}_uwl;      EP=100;;
   la)   export MIXUP=0.0 SHEAR=0.0;                                                                       NAME=${SN}_lightaug; EP=300;;
   orig) NAME=$ON; EP=300;;
-  corig)   export DATA_ROOT=/media/w/DATA1/Paper/JOE_paper/revision_runs/clipsplit DATA_TAG=clip;          NAME=clip_${SN};      EP=300;;   # clip-level split, paper recipe
+  corig)   export DATA_ROOT=/media/w/DATA1/Paper/JOE_paper/revision_runs/clipsplit DATA_TAG=clip;          NAME=clip_${SN};      EP=300;;   # clip-level split, full augmentation
   cla)     export DATA_ROOT=/media/w/DATA1/Paper/JOE_paper/revision_runs/clipsplit DATA_TAG=clip MIXUP=0.0 SHEAR=0.0;         NAME=clip_${SN}_la;   EP=300;;   # clip-level split, light augmentation (no DA), 300 epochs
-  tcorig)  export INIT_WEIGHTS=/media/w/DATA1/Paper/JOE_paper/revision_runs/trashcan_pretrain_v/weights/best.pt;                          NAME=tc_${ON};          EP=300;;   # TrashCan-initialised, paper augmentation
+  tcorig)  export INIT_WEIGHTS=/media/w/DATA1/Paper/JOE_paper/revision_runs/trashcan_pretrain_v/weights/best.pt;                          NAME=tc_${ON};          EP=300;;   # TrashCan-initialised, full augmentation
   tcla)    export INIT_WEIGHTS=/media/w/DATA1/Paper/JOE_paper/revision_runs/trashcan_pretrain_v/weights/best.pt MIXUP=0.0 SHEAR=0.0;  NAME=tc_${SN}_lightaug; EP=300;;   # TrashCan-initialised, light augmentation
   cuwl)    export DATA_ROOT=/media/w/DATA1/Paper/JOE_paper/revision_runs/clipsplit_uw DATA_TAG=clipuw MIXUP=0.0 SHEAR=0.0; NAME=clip_${SN}_uwl; EP=100;;   # clip-level split, degradation-aware + light augmentation
   nomix)   export MIXUP=0.0 SHEAR=20.0; NAME=${SN}_nomix;   EP=300;;

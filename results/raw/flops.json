@@ -5,7 +5,7 @@
   "GMACs": 3.22,
   "nc": 3
  },
- "PWST-YOLOv11 (original)": {
+ "PWST-YOLOv11": {
   "params_M": 2.481,
   "GFLOPs": 10.1,
   "GMACs": 5.05,

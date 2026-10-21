@@ -244,7 +244,7 @@ class SRAW_TM_Lite(nn.Module):
 
 # ---------------------------------------------------------------------------
 # Pretrained-compatible PWST insertions (revision): keep the layer index and the
-# state-dict keys (conv/bn) of the original Conv, add a zero-initialised gated branch.
+# state-dict keys (conv/bn) of the wrapped Conv, add a zero-initialised gated branch.
 # ---------------------------------------------------------------------------
 class ConvPWAM(Conv):
     """Conv followed by a gated PWAM (amplitude/phase). gamma=0 at start => identical to Conv."""

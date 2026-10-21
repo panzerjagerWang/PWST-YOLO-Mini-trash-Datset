@@ -1,5 +1,5 @@
 #!/bin/bash
-# final TrashCan seeds 10-14 for the light-recipe pair, then the rerun of the diverged tcdet_gin0 seed 1.
+# final TrashCan seeds 10-14 for the light-recipe pair, then a second run of the diverged tcdet_gin0 seed 1.
 # Started for scheduling only after queue_tc_round2c.sh has started all its jobs; their numbers are read only after
 # the round-2 selection on validation (preregistrations.txt). Same rule as round2c: start one job when fewer than six
 # run and more than 6000 MB of RAM is available.

@@ -1,10 +1,10 @@
-"""Robustness evaluation, extended: the 9 original corruptions + 12 held-out ones (never used for training augmentation).
+"""Robustness evaluation: the 9 named corruptions + 12 additional ones (never used for training augmentation).
 
 usage: python eval_robustness2.py data.yaml out.json label=weights.pt [label=weights.pt ...]
 in-family : blur_{1,2,3}, contrast_{.7,.5,.3}, haze_{.8,.6,.4}
 held-out  : motion_{9,17,25} (line kernel, 20 deg), defocus_{2,4,6} (disk radius, px), jpeg_{30,15,8} (quality),
             redloss_{.8,.6,.4} (red channel attenuated: underwater absorption)
-Test split only, no re-training; mAP50 in %.
+Test split only, the trained weights as they are; mAP50 in %.
 """
 import os, sys, json, shutil, tempfile, yaml
 import numpy as np

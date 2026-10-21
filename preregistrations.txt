@@ -1,3 +1,5 @@
+# preregistrations.txt: the time-stamped comment lines of revision_runs/queue.txt, copied without changes.
+# Terms of the log and of the manuscript: 'paper recipe' and 'orig' = full augmentation, 'la' = light augmentation, 'original split' = the frame-level split.
 # --- genuine amplitude/phase ablation (the v8 configuration contains PWAM_Lite only: PWAM_MODE had no effect there): pw_F (full PWAM at P3-P5), amplitude only / phase only, seeds 0-2, paper recipe
 # KEY:SEED:RECIPE, started in this order (first line whose log does not exist yet)
 # --- already started or finished (kept so that their logs map to a line): controls for AmpMix in CV, first confirmation runs

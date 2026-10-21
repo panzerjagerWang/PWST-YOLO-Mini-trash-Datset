@@ -1,4 +1,4 @@
-"""Qualitative TrashCan figure from the re-trained models (runs on the slave).
+"""Qualitative TrashCan figure from the trained models (runs on the workstation).
 Rows: ground truth and one row per model (default YOLOv11n and PWST-YOLOv11, seed 0 each).  Columns: six test images at equal spacing among the test images with at least two ground-truth objects.
 Predicted boxes (conf >= 0.25) are drawn in green; missed ground-truth objects (no prediction of the same class with IoU >= 0.5) are dashed red and false positives dashed yellow.
 usage: python gen_tc_fig.py OUT_DIR [LABEL=weights.pt ...]"""

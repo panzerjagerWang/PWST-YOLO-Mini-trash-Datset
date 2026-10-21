@@ -1,4 +1,4 @@
-"""Fair re-run on mini-Trash: baseline YOLOv11n vs PWST-YOLOv11 under one protocol.
+"""Training and evaluation on mini-Trash: YOLOv11n, PWST-YOLOv11 and the module variants under one protocol.
 usage: python run_exp.py NAME MODEL(.yaml|.pt) SEED EPOCHS
 Writes <OUT>/<NAME>_s<SEED>/ and a json line to <OUT>/summary.jsonl
 """

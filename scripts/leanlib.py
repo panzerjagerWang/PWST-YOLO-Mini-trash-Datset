@@ -24,7 +24,7 @@ PARTIAL = bool(os.environ.get('ALLOW_PARTIAL'))
 FAM = {'blur': ['blur_1', 'blur_2', 'blur_3'], 'contrast': ['contrast_0.7', 'contrast_0.5', 'contrast_0.3'], 'haze': ['haze_0.8', 'haze_0.6', 'haze_0.4'],
        'motion': ['motion_9', 'motion_17', 'motion_25'], 'defocus': ['defocus_2', 'defocus_4', 'defocus_6'],
        'jpeg': ['jpeg_30', 'jpeg_15', 'jpeg_8'], 'redloss': ['redloss_0.8', 'redloss_0.6', 'redloss_0.4']}
-IN = [c for f in ('blur', 'contrast', 'haze') for c in FAM[f]]          # the nine corruptions named in the review
+IN = [c for f in ('blur', 'contrast', 'haze') for c in FAM[f]]          # the nine named corruptions (blur, contrast reduction, turbidity)
 OUT = [c for f in ('motion', 'defocus', 'jpeg', 'redloss') for c in FAM[f]]   # twelve additional corruptions (fixed before the AmpMix runs)
 
 
@@ -59,7 +59,7 @@ REP_GROUPS = ('x_amp_lightaug', 'x_A_amp_lightaug', 'x_amp_la', 'x_A_amp_la', 'p
 REP_FROM = 5
 REP_SIM = bool(os.environ.get('REP_SIM'))      # dry-run switch for testing the generator only: the _rep groups become copies of the main groups
 # further seeds of the two baselines are kept apart from the pre-registered analyses as well (name -> (first extra seed, suffix))
-# The baseline of record is YOLOv11n with the paper recipe over ALL its seeds (0-7; seeds 3-7 were added to tighten the reference), so it is not split.
+# YOLOv11n with full augmentation is used with all its seeds (0-7), so it is not split.
 # Replication cohorts (new seeds, decided after the first cohort) are kept apart so that they are never pooled into the first analyses by accident.
 SPLIT = {'x_amp_lightaug': (5, '_rep'), 'x_A_amp_lightaug': (5, '_rep'), 'x_amp_la': (5, '_rep'), 'x_A_amp_la': (5, '_rep'),
          'base_lightaug': (5, '_rep'), 'base_la': (5, '_rep'),

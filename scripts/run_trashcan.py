@@ -1,5 +1,5 @@
 """Training and evaluation on TrashCan 1.0 with the protocol of the manuscript: 200 epochs, SGD, batch 8, initial learning rate 0.01 with cosine decay, 640 x 640,
-COCO-pretrained YOLOv11n initialization, the augmentation of the paper recipe (mixup 0.5, shear 20, mosaic 1.0, flips 0.5), no detector-specific tuning.
+COCO-pretrained YOLOv11n initialization, full augmentation (mixup 0.5, shear 20, mosaic 1.0, flips 0.5), no detector-specific tuning.
 usage: python run_trashcan.py NAME MODEL.yaml SEED EPOCHS [DATA.yaml]      environment: WORKERS, PROJECT, LIGHT=1 for the light augmentation recipe (mixup 0, shear 0)
 Appends the validation and test metrics to <project>/summary_trashcan.jsonl."""
 import json
