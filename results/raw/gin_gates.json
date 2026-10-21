@@ -1,0 +1,1 @@
+{"mini_trash_x_gin5_lightaug_s90_99": {"mean": 0.291, "sd": 0.042, "min": 0.261, "max": 0.410}, "trashcan_tclight_gin5_s10_14": {"mean": 0.180, "sd": 0.025, "min": 0.144, "max": 0.224}, "note": "learned gates a_c of GatedIN after training, all channels and seeds"}

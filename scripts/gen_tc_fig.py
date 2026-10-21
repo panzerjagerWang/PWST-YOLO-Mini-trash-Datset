@@ -9,14 +9,14 @@ import sys
 import numpy as np
 from PIL import Image, ImageDraw
 
-R = '/media/w/DATA1/Paper/JOE_paper'
-C = R + '/Code'
+R = os.environ.get('JOE_ROOT', '/media/w/DATA1/Paper/JOE_paper')      # directory that contains Code/ and revision_runs/
+C = os.environ.get('CODE_DIR', R + '/Code')
 sys.path[:0] = [C, C + '/ultralytics_repo']
 from ultralytics import YOLO  # noqa: E402
 
 out = sys.argv[1]
 os.makedirs(out, exist_ok=True)
-D = R + '/revision_runs/trashcan_split/test'
+D = os.environ.get('TEST_DIR', R + '/revision_runs/trashcan_split/test')      # mini-Trash: TEST_DIR=Code/dataset/test TILE=450x300
 W = dict(a.split('=', 1) for a in sys.argv[2:]) or {'YOLOv11n': R + '/revision_runs/tcdet_base_s0/weights/best.pt', 'PWST-YOLOv11': R + '/revision_runs/tcdet_pwst_s0/weights/best.pt'}
 names = sorted(os.listdir(D + '/images'))
 
@@ -57,7 +57,7 @@ def dashed(d, box, color, width=3, dash=8):
             d.line([(ax + (bx - ax) * t0, ay + (by - ay) * t0), (ax + (bx - ax) * t1, ay + (by - ay) * t1)], fill=color, width=width)
 
 
-SZ = (400, 300)
+SZ = tuple(int(v) for v in os.environ.get('TILE', '400x300').split('x'))
 tiles = {'GT': [], **{k: [] for k in W}}
 info = {'images': pick, 'weights': W, 'stats': {}}
 models = {k: YOLO(v) for k, v in W.items()}

@@ -1,0 +1,105 @@
+{
+ "corruption": "haze_0.4",
+ "test_images_with_objects": 202,
+ "objects": 307,
+ "seeds": {
+  "BASE": 10,
+  "GIN": 10
+ },
+ "images_gin_more": 97,
+ "images_gin_fewer": 5,
+ "detected_share_base": 69.0228013029316,
+ "detected_share_gin": 79.15309446254072,
+ "fp_per_image_base": 0.35000000000000003,
+ "fp_per_image_gin": 0.24207920792079204,
+ "images_gin_more_first_seed": 37,
+ "images_gin_fewer_first_seed": 11,
+ "images": [
+  "bio0001_frame0000141.jpg",
+  "bio0004_frame0000155.jpg",
+  "bio0016_frame0000221.jpg",
+  "obj0707_frame0000015.jpg",
+  "obj1108_frame0000161.jpg",
+  "obj1626_frame0000026.jpg"
+ ],
+ "per_image": {
+  "bio0001_frame0000141.jpg": {
+   "gt": 2,
+   "base": [
+    0,
+    1,
+    2
+   ],
+   "gin": [
+    2,
+    0,
+    0
+   ]
+  },
+  "bio0004_frame0000155.jpg": {
+   "gt": 1,
+   "base": [
+    0,
+    1,
+    1
+   ],
+   "gin": [
+    1,
+    0,
+    0
+   ]
+  },
+  "bio0016_frame0000221.jpg": {
+   "gt": 1,
+   "base": [
+    0,
+    1,
+    1
+   ],
+   "gin": [
+    1,
+    0,
+    0
+   ]
+  },
+  "obj0707_frame0000015.jpg": {
+   "gt": 1,
+   "base": [
+    0,
+    1,
+    1
+   ],
+   "gin": [
+    1,
+    1,
+    0
+   ]
+  },
+  "obj1108_frame0000161.jpg": {
+   "gt": 2,
+   "base": [
+    1,
+    0,
+    1
+   ],
+   "gin": [
+    2,
+    0,
+    0
+   ]
+  },
+  "obj1626_frame0000026.jpg": {
+   "gt": 2,
+   "base": [
+    1,
+    0,
+    1
+   ],
+   "gin": [
+    2,
+    0,
+    0
+   ]
+  }
+ }
+}

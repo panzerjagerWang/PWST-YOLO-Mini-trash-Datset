@@ -1,0 +1,352 @@
+{
+ "yolo11n_base_s0": {
+  "IoU_HM": 0.09905114403952597,
+  "AOR": 26.360820103399824,
+  "Pointing": 51.98019801980198,
+  "n_images": 202,
+  "weights": "revision_runs/yolo11n_base_s0/weights/best.pt"
+ },
+ "pw_D_sra57_s0": {
+  "IoU_HM": 0.0954711356974827,
+  "AOR": 26.081684375753497,
+  "Pointing": 52.97029702970297,
+  "n_images": 202,
+  "weights": "revision_runs/pw_D_sra57_s0/weights/best.pt"
+ },
+ "pw_A_sraw57_s0": {
+  "IoU_HM": 0.08656228635814452,
+  "AOR": 25.36273637679544,
+  "Pointing": 49.00990099009901,
+  "n_images": 202,
+  "weights": "revision_runs/pw_A_sraw57_s0/weights/best.pt"
+ },
+ "yolo11n_base_s1": {
+  "IoU_HM": 0.09062611156785327,
+  "AOR": 26.431949150444257,
+  "Pointing": 49.00990099009901,
+  "n_images": 202,
+  "weights": "revision_runs/yolo11n_base_s1/weights/best.pt"
+ },
+ "pw_D_sra57_s1": {
+  "IoU_HM": 0.06940265503393969,
+  "AOR": 25.884606989893584,
+  "Pointing": 35.148514851485146,
+  "n_images": 202,
+  "weights": "revision_runs/pw_D_sra57_s1/weights/best.pt"
+ },
+ "pw_A_sraw57_s1": {
+  "IoU_HM": 0.11591960356030281,
+  "AOR": 26.38422944286082,
+  "Pointing": 57.92079207920792,
+  "n_images": 202,
+  "weights": "revision_runs/pw_A_sraw57_s1/weights/best.pt"
+ },
+ "yolo11n_base_s2": {
+  "IoU_HM": 0.11780882872760015,
+  "AOR": 27.161162840257777,
+  "Pointing": 55.445544554455445,
+  "n_images": 202,
+  "weights": "revision_runs/yolo11n_base_s2/weights/best.pt"
+ },
+ "pw_D_sra57_s2": {
+  "IoU_HM": 0.12151823770411016,
+  "AOR": 27.728384966897494,
+  "Pointing": 53.46534653465346,
+  "n_images": 202,
+  "weights": "revision_runs/pw_D_sra57_s2/weights/best.pt"
+ },
+ "pw_A_sraw57_s2": {
+  "IoU_HM": 0.09891790853448931,
+  "AOR": 26.32202345959031,
+  "Pointing": 49.00990099009901,
+  "n_images": 202,
+  "weights": "revision_runs/pw_A_sraw57_s2/weights/best.pt"
+ },
+ "yolo11n_base_s3": {
+  "IoU_HM": 0.08939321051278847,
+  "AOR": 25.90310152863512,
+  "Pointing": 43.06930693069307,
+  "n_images": 202,
+  "weights": "revision_runs/yolo11n_base_s3/weights/best.pt"
+ },
+ "pw_D_sra57_s3": {
+  "IoU_HM": 0.13771830595727558,
+  "AOR": 28.184165731515034,
+  "Pointing": 56.93069306930693,
+  "n_images": 202,
+  "weights": "revision_runs/pw_D_sra57_s3/weights/best.pt"
+ },
+ "pw_A_sraw57_s3": {
+  "IoU_HM": 0.09713734442557517,
+  "AOR": 26.48326439963709,
+  "Pointing": 46.039603960396036,
+  "n_images": 202,
+  "weights": "revision_runs/pw_A_sraw57_s3/weights/best.pt"
+ },
+ "yolo11n_base_s4": {
+  "IoU_HM": 0.11201013103421871,
+  "AOR": 27.23653009976491,
+  "Pointing": 53.960396039603964,
+  "n_images": 202,
+  "weights": "revision_runs/yolo11n_base_s4/weights/best.pt"
+ },
+ "pw_D_sra57_s4": {
+  "IoU_HM": 0.09307786901851156,
+  "AOR": 26.15166557012218,
+  "Pointing": 48.51485148514851,
+  "n_images": 202,
+  "weights": "revision_runs/pw_D_sra57_s4/weights/best.pt"
+ },
+ "pw_A_sraw57_s4": {
+  "IoU_HM": 0.12249102620474925,
+  "AOR": 27.753318876323135,
+  "Pointing": 55.445544554455445,
+  "n_images": 202,
+  "weights": "revision_runs/pw_A_sraw57_s4/weights/best.pt"
+ },
+ "yolo11n_base_s5": {
+  "IoU_HM": 0.12418696924560045,
+  "AOR": 27.401532653534765,
+  "Pointing": 56.93069306930693,
+  "n_images": 202,
+  "weights": "revision_runs/yolo11n_base_s5/weights/best.pt"
+ },
+ "pw_D_sra57_s5": {
+  "IoU_HM": 0.09265110093900486,
+  "AOR": 25.845907962558293,
+  "Pointing": 46.53465346534654,
+  "n_images": 202,
+  "weights": "revision_runs/pw_D_sra57_s5/weights/best.pt"
+ },
+ "pw_A_sraw57_s5": {
+  "IoU_HM": 0.14452726715889347,
+  "AOR": 27.705366908913792,
+  "Pointing": 54.45544554455446,
+  "n_images": 202,
+  "weights": "revision_runs/pw_A_sraw57_s5/weights/best.pt"
+ },
+ "yolo11n_base_s6": {
+  "IoU_HM": 0.11054708272970971,
+  "AOR": 27.82990083127919,
+  "Pointing": 50.0,
+  "n_images": 202,
+  "weights": "revision_runs/yolo11n_base_s6/weights/best.pt"
+ },
+ "pw_D_sra57_s6": {
+  "IoU_HM": 0.09493431934780959,
+  "AOR": 26.274853556463032,
+  "Pointing": 48.51485148514851,
+  "n_images": 202,
+  "weights": "revision_runs/pw_D_sra57_s6/weights/best.pt"
+ },
+ "pw_A_sraw57_s6": {
+  "IoU_HM": 0.0916202013354801,
+  "AOR": 27.26737918712125,
+  "Pointing": 48.01980198019802,
+  "n_images": 202,
+  "weights": "revision_runs/pw_A_sraw57_s6/weights/best.pt"
+ },
+ "yolo11n_base_s7": {
+  "IoU_HM": 0.08574893425083585,
+  "AOR": 25.882575431082508,
+  "Pointing": 44.554455445544555,
+  "n_images": 202,
+  "weights": "revision_runs/yolo11n_base_s7/weights/best.pt"
+ },
+ "pw_D_sra57_s7": {
+  "IoU_HM": 0.11144135833369491,
+  "AOR": 27.170945428385593,
+  "Pointing": 50.99009900990099,
+  "n_images": 202,
+  "weights": "revision_runs/pw_D_sra57_s7/weights/best.pt"
+ },
+ "pw_A_sraw57_s7": {
+  "IoU_HM": 0.10938547744328603,
+  "AOR": 27.126249207128392,
+  "Pointing": 51.98019801980198,
+  "n_images": 202,
+  "weights": "revision_runs/pw_A_sraw57_s7/weights/best.pt"
+ },
+ "pw_F_pw357_s0": {
+  "IoU_HM": 0.1088795581471007,
+  "AOR": 26.57781197056912,
+  "Pointing": 47.524752475247524,
+  "n_images": 202,
+  "weights": "revision_runs/pw_F_pw357_s0/weights/best.pt"
+ },
+ "pwst_v7final_s0": {
+  "IoU_HM": 0.07248171591682812,
+  "AOR": 33.94031450093382,
+  "Pointing": 39.603960396039604,
+  "n_images": 202,
+  "weights": "revision_runs/pwst_v7final_s0/weights/best.pt"
+ },
+ "pw_F_pw357_s1": {
+  "IoU_HM": 0.09642712944968099,
+  "AOR": 25.88629264937769,
+  "Pointing": 52.97029702970297,
+  "n_images": 202,
+  "weights": "revision_runs/pw_F_pw357_s1/weights/best.pt"
+ },
+ "pwst_v7final_s1": {
+  "IoU_HM": 0.10572659940880987,
+  "AOR": 41.59486180248827,
+  "Pointing": 84.15841584158416,
+  "n_images": 202,
+  "weights": "revision_runs/pwst_v7final_s1/weights/best.pt"
+ },
+ "pw_F_pw357_s2": {
+  "IoU_HM": 0.08546783972654005,
+  "AOR": 26.034799722751767,
+  "Pointing": 45.04950495049505,
+  "n_images": 202,
+  "weights": "revision_runs/pw_F_pw357_s2/weights/best.pt"
+ },
+ "pwst_v7final_s2": {
+  "IoU_HM": 0.05509300148284106,
+  "AOR": 33.66104559024962,
+  "Pointing": 18.316831683168317,
+  "n_images": 202,
+  "weights": "revision_runs/pwst_v7final_s2/weights/best.pt"
+ },
+ "base_lightaug_s0": {
+  "IoU_HM": 0.16311047673575746,
+  "AOR": 29.27165448901677,
+  "Pointing": 67.32673267326733,
+  "n_images": 202,
+  "weights": "revision_runs/base_lightaug_s0/weights/best.pt"
+ },
+ "base_lightaug_s1": {
+  "IoU_HM": 0.12190784952810688,
+  "AOR": 28.530721889273956,
+  "Pointing": 42.57425742574257,
+  "n_images": 202,
+  "weights": "revision_runs/base_lightaug_s1/weights/best.pt"
+ },
+ "base_lightaug_s2": {
+  "IoU_HM": 0.16667362379098485,
+  "AOR": 28.476309282944936,
+  "Pointing": 58.91089108910891,
+  "n_images": 202,
+  "weights": "revision_runs/base_lightaug_s2/weights/best.pt"
+ },
+ "base_lightaug_s3": {
+  "IoU_HM": 0.14473857926544023,
+  "AOR": 28.852125962181848,
+  "Pointing": 56.43564356435643,
+  "n_images": 202,
+  "weights": "revision_runs/base_lightaug_s3/weights/best.pt"
+ },
+ "base_lightaug_s4": {
+  "IoU_HM": 0.14225620493497562,
+  "AOR": 29.178718097139114,
+  "Pointing": 51.98019801980198,
+  "n_images": 202,
+  "weights": "revision_runs/base_lightaug_s4/weights/best.pt"
+ },
+ "base_lightaug_s5": {
+  "IoU_HM": 0.16313694804806972,
+  "AOR": 29.633551635364494,
+  "Pointing": 57.92079207920792,
+  "n_images": 202,
+  "weights": "revision_runs/base_lightaug_s5/weights/best.pt"
+ },
+ "base_lightaug_s6": {
+  "IoU_HM": 0.1390400791654629,
+  "AOR": 28.743847243856674,
+  "Pointing": 50.0,
+  "n_images": 202,
+  "weights": "revision_runs/base_lightaug_s6/weights/best.pt"
+ },
+ "base_lightaug_s7": {
+  "IoU_HM": 0.14558016134898494,
+  "AOR": 28.790611152601713,
+  "Pointing": 51.48514851485149,
+  "n_images": 202,
+  "weights": "revision_runs/base_lightaug_s7/weights/best.pt"
+ },
+ "base_lightaug_s8": {
+  "IoU_HM": 0.1273632343707325,
+  "AOR": 28.263159124567956,
+  "Pointing": 49.00990099009901,
+  "n_images": 202,
+  "weights": "revision_runs/base_lightaug_s8/weights/best.pt"
+ },
+ "base_lightaug_s9": {
+  "IoU_HM": 0.1772588133152075,
+  "AOR": 29.701247857348754,
+  "Pointing": 62.37623762376238,
+  "n_images": 202,
+  "weights": "revision_runs/base_lightaug_s9/weights/best.pt"
+ },
+ "x_gin5_lightaug_s90": {
+  "IoU_HM": 0.14960656444009807,
+  "AOR": 28.308625322757383,
+  "Pointing": 50.495049504950494,
+  "n_images": 202,
+  "weights": "revision_runs/x_gin5_lightaug_s90/weights/best.pt"
+ },
+ "x_gin5_lightaug_s91": {
+  "IoU_HM": 0.14908508459279204,
+  "AOR": 28.720483427000516,
+  "Pointing": 52.97029702970297,
+  "n_images": 202,
+  "weights": "revision_runs/x_gin5_lightaug_s91/weights/best.pt"
+ },
+ "x_gin5_lightaug_s92": {
+  "IoU_HM": 0.13888543775503592,
+  "AOR": 28.733544858965544,
+  "Pointing": 56.93069306930693,
+  "n_images": 202,
+  "weights": "revision_runs/x_gin5_lightaug_s92/weights/best.pt"
+ },
+ "x_gin5_lightaug_s93": {
+  "IoU_HM": 0.11973245493577142,
+  "AOR": 28.56808060112566,
+  "Pointing": 49.00990099009901,
+  "n_images": 202,
+  "weights": "revision_runs/x_gin5_lightaug_s93/weights/best.pt"
+ },
+ "x_gin5_lightaug_s94": {
+  "IoU_HM": 0.17132643419902022,
+  "AOR": 29.097096709921807,
+  "Pointing": 60.396039603960396,
+  "n_images": 202,
+  "weights": "revision_runs/x_gin5_lightaug_s94/weights/best.pt"
+ },
+ "x_gin5_lightaug_s95": {
+  "IoU_HM": 0.1698754664688269,
+  "AOR": 28.995983512094707,
+  "Pointing": 51.48514851485149,
+  "n_images": 202,
+  "weights": "revision_runs/x_gin5_lightaug_s95/weights/best.pt"
+ },
+ "x_gin5_lightaug_s96": {
+  "IoU_HM": 0.14326113364576784,
+  "AOR": 28.748481205784447,
+  "Pointing": 53.960396039603964,
+  "n_images": 202,
+  "weights": "revision_runs/x_gin5_lightaug_s96/weights/best.pt"
+ },
+ "x_gin5_lightaug_s97": {
+  "IoU_HM": 0.1598157230431107,
+  "AOR": 29.246976239846486,
+  "Pointing": 60.396039603960396,
+  "n_images": 202,
+  "weights": "revision_runs/x_gin5_lightaug_s97/weights/best.pt"
+ },
+ "x_gin5_lightaug_s98": {
+  "IoU_HM": 0.1744421721745298,
+  "AOR": 28.49903927345087,
+  "Pointing": 60.89108910891089,
+  "n_images": 202,
+  "weights": "revision_runs/x_gin5_lightaug_s98/weights/best.pt"
+ },
+ "x_gin5_lightaug_s99": {
+  "IoU_HM": 0.14859636596016657,
+  "AOR": 28.517584598890625,
+  "Pointing": 51.98019801980198,
+  "n_images": 202,
+  "weights": "revision_runs/x_gin5_lightaug_s99/weights/best.pt"
+ }
+}

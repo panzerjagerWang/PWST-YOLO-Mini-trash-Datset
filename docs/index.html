@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>PWST-YOLO Project Page</title>
-<meta name="description" content="Project page of PWST-YOLO: phase-aware wave-like aggregation and space-reduction attention for underwater debris detection.">
+<meta name="description" content="Gated input standardization for underwater debris detection under turbidity and low contrast, with the PWAM and SRAW-TM modules for YOLOv11n.">
 <style>
 :root{--bg:#fbfbfa;--fg:#1c2430;--mut:#5b6675;--card:#fff;--line:#dfe3e8;--acc:#0b6e99;--acc2:#e8f3f8;--warn:#fff4d6;--warnl:#e6c767}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#10151b;--fg:#e6eaef;--mut:#9aa6b4;--card:#171e26;--line:#2a3441;--acc:#6cc4ea;--acc2:#12303d;--warn:#3a3118;--warnl:#7a6525}}
@@ -60,100 +60,110 @@ footer{padding:30px 0 50px;color:var(--mut);font-size:.9rem;border-top:1px solid
 </div></header>
 
 <nav><div class="wrap">
-<a href="#overview">Overview</a><a href="#method">Method</a><a href="#data">Dataset</a><a href="#results">Results</a><a href="#qual">Qualitative</a><a href="#limits">Limitations</a><a href="#repro">Reproduce</a>
+<a href="#overview">Overview</a><a href="#gin">GIN</a><a href="#degradation">Degradation</a><a href="#qual">Qualitative</a><a href="#results">Clean accuracy</a><a href="#data">Dataset</a><a href="#modules">Modules</a><a href="#limits">Limitations</a><a href="#repro">Reproduce</a>
 </div></nav>
 
 <main class="wrap">
 
 <section id="overview">
 <h2>Overview</h2>
-<p>PWST-YOLO inserts two modules into YOLO detectors for underwater debris: <b>PWAM</b>, a phase-aware amplitude/phase aggregation block that replaces selected convolutions, and <b>SRAW-TM</b>, a Transformer block with space-reduction attention that replaces down-sampling. We evaluate on our <b>mini-Trash</b> dataset (1006 J-EDI images, 3 classes) and on TrashCan.</p>
+<p>Turbidity, backscatter and the absorption of red light change the mean and the contrast of each colour channel of an underwater image. We propose a <b>gated input standardization (GIN)</b> for YOLOv11n. It standardizes each colour channel of the input image and blends the result with the image through a learnable gate, so that part of the network input stays the same under these degradations. We also study two modules for the detector, the phase-aware wave-like aggregation module <b>PWAM</b> and the transformer module with space-reduction attention <b>SRAW-TM</b>. All models were trained under one protocol with several seeds on our <b>mini-Trash</b> dataset and on TrashCan.</p>
 <div class="grid">
-<div class="stat"><b>89.3%</b><span>YOLOv11n test mAP50 over 8 seeds in the controlled re-run (&plusmn; 1.1); of the 5 module variants, higher than YOLOv11n in test mAP50: SRAW-TM at P4/P5 +1.3 pts (Welch p = 0.011, uncorrected) and SRA-only at P4/P5 +1.3 pts (Welch p = 0.016, uncorrected); replication with 5 new seeds each: SRAW-TM at P4/P5 +0.4 pts (p = 0.531) and SRA-only at P4/P5 +0.4 pts (p = 0.572)</span></div>
-<div class="stat"><b>&minus;2.8 pts</b><span>original PWST-YOLOv11 vs. YOLOv11n, same protocol, mean test mAP50 over 3 seeds (Welch p = 0.015)</span></div>
-<div class="stat"><b>+3.3 pts</b><span>test mAP50-95 of YOLOv11n from removing mixup and shear (mAP50 unchanged; 5 seeds)</span></div>
-<div class="stat"><b>+2.8 pts</b><span>mean mAP50 on twelve additional corruptions of YOLOv11n + AmpMix (parameter-free, training-time; light-augmentation recipe, 5 seeds each; Welch p = 0.014)</span></div>
-<div class="stat"><b>+1.3 pts</b><span>mean mAP50 on the nine named corruptions (blur, contrast reduction, haze) of YOLOv11n with a gated input standardization (GIN; hypothesis fixed beforehand, 10 new seeds, Welch p = 0.008); clean mAP50 &minus;0.1 pts (p = 0.87)</span></div>
-<div class="stat"><b>52.4%</b><span>YOLOv11n test mAP50 on a clip-level split (frame-level split: 89.3%)</span></div>
-<div class="stat"><b>9.6%</b><span>of the mini-Trash images have an essentially identical counterpart in TrashCan (97 of 1006)</span></div>
+<div class="stat"><b>+1.3 pts</b><span>mean mAP50 on mini-Trash under blur, contrast reduction and turbidity, GIN against YOLOv11n with the same recipe, a test fixed before ten new seeds, Welch p = 0.008</span></div>
+<div class="stat"><b>+6.3 pts</b><span>mAP50 on mini-Trash under the strongest turbidity, t = 0.4, p &lt; 0.001</span></div>
+<div class="stat"><b>+9.3 pts</b><span>the same mean on TrashCan, five seeds each, p = 0.002, and +21.9 pts under turbidity with t = 0.6</span></div>
+<div class="stat"><b>97 vs 5</b><span>mini-Trash test images on which GIN detects more or fewer objects than YOLOv11n under turbidity with t = 0.4, averaged over ten seeds</span></div>
+<div class="stat"><b>&minus;0.1 pts</b><span>clean test mAP50 of GIN on mini-Trash, p = 0.87, with three added parameters</span></div>
+<div class="stat"><b>+2.8 pts</b><span>AmpMix, a parameter-free Fourier amplitude mixing at training time, on twelve additional corruptions, p = 0.01</span></div>
 </div>
-<div class="note"><b>Reading these numbers.</b> mini-Trash was split at the frame level; 96.5% of the test images come from a source clip that also appears in training, so the figures are in-distribution results (see <a href="#limits">Limitations</a>).</div>
 </section>
 
-<section id="method">
-<h2>Method</h2>
-<h3>PWAM: amplitude and phase</h3>
-<p>Each feature vector is a wave with amplitude <code>|z|</code> and phase <code>&theta;</code>. After Euler expansion, the output is a real-valued combination of <code>|z|cos&theta;</code> and <code>|z|sin&theta;</code>, so no complex tensor is formed and <b>no Fourier transform is involved</b>. The formulation follows WaveMLP (Tang et al., CVPR 2022); in our detector the weights mix channels at each position and the output enters through a zero-initialized residual gate.</p>
-<figure><img src="img/fig1_PWAM.png" alt="PWAM structure"><figcaption>PWAM: amplitude and phase are mapped to real and imaginary components and aggregated.</figcaption></figure>
-<h3>SRAW-TM</h3>
-<p>PWAM aggregation is followed by space-reduction attention (keys and values are shortened by a ratio R, reducing the attention matrix by R&sup2;). The encoder depth can be 3 instead of 6.</p>
-<figure><img src="img/Fig_Methods.png" alt="SRAW-TM structure"><figcaption>Transformer module based on PWAM and SRA.</figcaption></figure>
-<h3>Architectures</h3>
-<figure><img src="img/fig_yolov11Network.png" alt="PWST-YOLOv11"><figcaption>PWST-YOLOv11. The placement differs from PWST-YOLOv7, so PWST is a design pattern rather than a drop-in module.</figcaption></figure>
-<figure><img src="img/fig4_PWST-YOLOv7.png" alt="PWST-YOLOv7"><figcaption>PWST-YOLOv7.</figcaption></figure>
+<section id="gin">
+<h2>Gated input standardization</h2>
+<p>Turbidity adds a veiling light and attenuates the image, I&prime; = It + A(1 &minus; t), a loss of contrast scales the deviations from the mean, and the absorption of red light scales the red channel. All three are affine changes of each colour channel, x&prime;<sub>c</sub> = &alpha;<sub>c</sub>x<sub>c</sub> + &beta;<sub>c</sub> with &alpha;<sub>c</sub> &gt; 0. A per-image standardization of each channel is unchanged by such a change. GIN adds this standardized image to the input of the first convolution of YOLOv11n:</p>
+<p style="text-align:center;font-size:1.08rem">x&#771;<sub>c</sub> = x<sub>c</sub> + a<sub>c</sub> ( s (x<sub>c</sub> &minus; &mu;<sub>c</sub>) / &radic;(&sigma;<sub>c</sub><sup>2</sup> + &epsilon;) + m &minus; x<sub>c</sub> ),&nbsp;&nbsp; m = 0.4, s = 0.18, &epsilon; = 10<sup>&minus;3</sup></p>
+<p>&mu;<sub>c</sub> and &sigma;<sub>c</sub> are the mean and the standard deviation of channel c over the image, and the gate a<sub>c</sub> is learned per channel and initialized at 0.5. GIN has three parameters, is active at training and inference time and leaves the COCO weights of the rest of YOLOv11n unchanged. After training the gates are 0.29 &plusmn; 0.04 on mini-Trash and 0.18 &plusmn; 0.03 on TrashCan, so the network input keeps most of the image and adds the standardized component. Blur, defocus, motion and JPEG compression are not affine changes of the channels, and GIN is not designed for them.</p>
+</section>
+
+<section id="degradation">
+<h2>Detection under degradation</h2>
+<p>mAP50 in % on the test split under 21 synthetic corruptions, GIN against YOLOv11n, both with light augmentation, that is without mixup and shear. mini-Trash: ten seeds each. TrashCan: seeds 10 to 14. The nine named conditions are blur, contrast reduction and turbidity.</p>
+<div class="tblwrap"><table>
+<thead><tr><th></th><th colspan="4">mini-Trash</th><th colspan="4">TrashCan</th></tr>
+<tr><th>Condition</th><th>YOLOv11n</th><th>GIN</th><th>Diff.</th><th>Welch p</th><th>YOLOv11n</th><th>GIN</th><th>Diff.</th><th>Welch p</th></tr></thead>
+<tbody>
+<tr><td>Gaussian blur, &sigma; = 1 px</td><td>89.5</td><td>89.6</td><td>+0.1</td><td>0.79</td><td>67.0</td><td>71.0</td><td>+4.0</td><td>0.05</td></tr>
+<tr><td>Gaussian blur, &sigma; = 2 px</td><td>80.1</td><td>79.6</td><td>&minus;0.5</td><td>0.65</td><td>43.6</td><td>44.3</td><td>+0.8</td><td>0.66</td></tr>
+<tr><td>Gaussian blur, &sigma; = 3 px</td><td>61.5</td><td>60.5</td><td>&minus;1.0</td><td>0.49</td><td>28.6</td><td>26.3</td><td>&minus;2.3</td><td>0.16</td></tr>
+<tr><td>Contrast reduction, &alpha; = 0.7</td><td>89.0</td><td>89.8</td><td>+0.7</td><td>0.10</td><td>70.7</td><td>76.0</td><td>+5.3</td><td>0.11</td></tr>
+<tr><td>Contrast reduction, &alpha; = 0.5</td><td>88.3</td><td>89.2</td><td>+0.9</td><td>0.02</td><td>59.7</td><td>71.6</td><td>+11.9</td><td>0.01</td></tr>
+<tr><td>Contrast reduction, &alpha; = 0.3</td><td>84.7</td><td>87.0</td><td>+2.2</td><td>&lt; 0.001</td><td>30.7</td><td>50.6</td><td>+19.9</td><td>&lt; 0.001</td></tr>
+<tr><td>Turbidity, t = 0.8</td><td>89.0</td><td>89.6</td><td>+0.6</td><td>0.12</td><td>63.0</td><td>72.4</td><td>+9.3</td><td>0.03</td></tr>
+<tr class="ours"><td>Turbidity, t = 0.6</td><td>85.6</td><td>87.6</td><td>+2.0</td><td>&lt; 0.001</td><td>31.4</td><td>53.3</td><td>+21.9</td><td>&lt; 0.001</td></tr>
+<tr class="ours"><td>Turbidity, t = 0.4</td><td>76.6</td><td>82.9</td><td>+6.3</td><td>&lt; 0.001</td><td>11.1</td><td>23.8</td><td>+12.7</td><td>&lt; 0.001</td></tr>
+<tr class="ours"><td>Mean of the nine named</td><td>82.7</td><td>84.0</td><td>+1.3</td><td>0.008</td><td>45.1</td><td>54.4</td><td>+9.3</td><td>0.002</td></tr>
+<tr><td>Motion blur, 9 px</td><td>77.9</td><td>76.5</td><td>&minus;1.5</td><td>0.21</td><td>47.2</td><td>48.8</td><td>+1.6</td><td>0.20</td></tr>
+<tr><td>Motion blur, 17 px</td><td>51.7</td><td>49.1</td><td>&minus;2.7</td><td>0.17</td><td>21.3</td><td>22.1</td><td>+0.8</td><td>0.58</td></tr>
+<tr><td>Motion blur, 25 px</td><td>37.9</td><td>36.3</td><td>&minus;1.6</td><td>0.42</td><td>13.9</td><td>14.9</td><td>+1.0</td><td>0.42</td></tr>
+<tr><td>Defocus, radius 2 px</td><td>89.0</td><td>89.1</td><td>+0.1</td><td>0.72</td><td>64.3</td><td>69.0</td><td>+4.8</td><td>0.03</td></tr>
+<tr><td>Defocus, radius 4 px</td><td>77.6</td><td>76.3</td><td>&minus;1.3</td><td>0.24</td><td>40.8</td><td>40.5</td><td>&minus;0.3</td><td>0.85</td></tr>
+<tr><td>Defocus, radius 6 px</td><td>57.8</td><td>56.0</td><td>&minus;1.8</td><td>0.27</td><td>24.8</td><td>22.3</td><td>&minus;2.5</td><td>0.07</td></tr>
+<tr><td>JPEG, quality 30</td><td>87.9</td><td>86.7</td><td>&minus;1.2</td><td>0.01</td><td>72.4</td><td>75.1</td><td>+2.7</td><td>0.27</td></tr>
+<tr><td>JPEG, quality 15</td><td>75.5</td><td>72.0</td><td>&minus;3.4</td><td>0.004</td><td>67.6</td><td>68.6</td><td>+1.0</td><td>0.73</td></tr>
+<tr><td>JPEG, quality 8</td><td>46.1</td><td>41.6</td><td>&minus;4.5</td><td>0.02</td><td>49.3</td><td>48.5</td><td>&minus;0.8</td><td>0.80</td></tr>
+<tr><td>Red-channel attenuation, gain 0.8</td><td>87.2</td><td>88.7</td><td>+1.5</td><td>0.001</td><td>63.6</td><td>70.9</td><td>+7.3</td><td>0.10</td></tr>
+<tr><td>Red-channel attenuation, gain 0.6</td><td>82.8</td><td>85.8</td><td>+3.0</td><td>&lt; 0.001</td><td>54.4</td><td>62.3</td><td>+7.9</td><td>0.12</td></tr>
+<tr><td>Red-channel attenuation, gain 0.4</td><td>78.5</td><td>82.4</td><td>+3.8</td><td>&lt; 0.001</td><td>50.5</td><td>57.0</td><td>+6.6</td><td>0.18</td></tr>
+<tr><td>Mean of the twelve additional</td><td>70.8</td><td>70.0</td><td>&minus;0.8</td><td>0.26</td><td>47.5</td><td>50.0</td><td>+2.5</td><td>0.22</td></tr>
+</tbody></table></div>
+<p>On mini-Trash the gain of GIN grows with the strength of turbidity and contrast reduction and reaches 6.3 points under turbidity with t = 0.4. On TrashCan GIN raises the nine named conditions by 9.3 points, with the largest gain of 21.9 points under turbidity with t = 0.6, and the clean test mAP50 changes by +2.7 points, 76.8 against 74.1%, with p = 0.30. GIN does not help against blur, motion blur and defocus, and under JPEG compression with quality 8 it is 4.5 points below YOLOv11n on mini-Trash, with p = 0.02.</p>
+</section>
+
+<section id="qual">
+<h2>Qualitative results under turbidity</h2>
+<figure><img src="img/fig_detectionresult.png" alt="mini-Trash detections under turbidity" loading="lazy"><figcaption>Six mini-Trash test images under turbidity with t = 0.4. First row: the degraded images with the ground truth. Second row: YOLOv11n. Third row: GIN. Both with light augmentation, the first seed of each and a confidence threshold of 0.25. Green boxes are correct detections, dashed red boxes missed objects and dashed yellow boxes false positives. The images are equally spaced among the test images on which GIN detects more objects than YOLOv11n. Over all ten seeds of each model, GIN detects more objects on 97 of the 202 test images and fewer on 5, 79.2% of the 307 annotated objects against 69.0%, with 0.24 instead of 0.35 false positives per image.</figcaption></figure>
+<figure><img src="img/fig_detection_ab_gt.png" alt="TrashCan detections under turbidity" loading="lazy"><figcaption>TrashCan test images under turbidity with t = 0.6, same layout. Over the five seeds of each model, GIN detects more objects on 406 of the 705 test images with objects and fewer on 47, 55.5% of the 1266 annotated objects against 40.1%, with 0.56 instead of 0.64 false positives per image.</figcaption></figure>
+<figure><img src="img/fig_heatmap.png" alt="heat maps" loading="lazy"><figcaption>Channel-mean activation of the stride-16 feature map that enters the detection head, on four clean mini-Trash test images. Columns: the image with the ground truth, YOLOv11n, SRA-only at P4/P5, SRAW-TM at P4/P5, PWST-YOLOv11 and GIN. Over the test split, the light recipe raises the IoU between the binarized map and the boxes from 0.10 to 0.15, and GIN does not change it further, 0.15.</figcaption></figure>
+</section>
+
+<section id="results">
+<h2>Clean accuracy on mini-Trash</h2>
+<p>Test split, mean and standard deviation over n seeds under one training protocol, with the mean mAP50 over the nine named and the twelve additional corruptions. Parameters and GMACs for a 640&times;640 input.</p>
+<div class="tblwrap"><table>
+<thead><tr><th>Model</th><th>n</th><th>mAP50</th><th>mAP50-95</th><th>nine named</th><th>twelve additional</th><th>Params (M)</th><th>GMACs</th></tr></thead>
+<tbody>
+<tr><td>YOLOv11n, full augmentation</td><td>8</td><td>89.3 &plusmn; 1.1</td><td>60.7 &plusmn; 0.7</td><td>83.7 &plusmn; 0.9</td><td>67.3 &plusmn; 1.8</td><td>2.59</td><td>3.22</td></tr>
+<tr><td>PWST-YOLOv11, full augmentation</td><td>3</td><td>86.4 &plusmn; 1.0</td><td>50.4 &plusmn; 0.6</td><td>79.7 &plusmn; 0.4</td><td>59.2 &plusmn; 1.4</td><td>2.48</td><td>5.05</td></tr>
+<tr><td>YOLOv11n, light augmentation</td><td>10</td><td>89.9 &plusmn; 0.9</td><td>63.7 &plusmn; 0.6</td><td>82.7 &plusmn; 0.8</td><td>70.8 &plusmn; 0.9</td><td>2.59</td><td>3.22</td></tr>
+<tr><td>YOLOv11n + AmpMix, light augmentation</td><td>10</td><td>90.0 &plusmn; 0.5</td><td>64.0 &plusmn; 0.8</td><td>84.4 &plusmn; 1.6</td><td>73.9 &plusmn; 1.7</td><td>2.59</td><td>3.22</td></tr>
+<tr><td>SRAW-TM at P4/P5 + AmpMix, light augmentation</td><td>10</td><td>90.5 &plusmn; 0.9</td><td>64.5 &plusmn; 1.1</td><td>85.1 &plusmn; 0.9</td><td>75.9 &plusmn; 0.7</td><td>3.66</td><td>3.56</td></tr>
+<tr class="ours"><td>GIN, light augmentation</td><td>10</td><td>89.8 &plusmn; 0.9</td><td>64.0 &plusmn; 1.5</td><td>84.0 &plusmn; 1.1</td><td>70.0 &plusmn; 1.9</td><td>2.59</td><td>3.22</td></tr>
+</tbody></table></div>
+<p>With light augmentation, the clean test mAP50 of the four configurations lies between 89.8 and 90.5%, and they differ under degradation. PWST-YOLOv11 reaches 86.4 &plusmn; 1.0% test mAP50 against 89.3 &plusmn; 1.1% for YOLOv11n with 57% more GMACs. Network forward pass on an RTX 4070 Ti SUPER with batch size 1 in FP32: YOLOv11n 2.77 ms, PWST-YOLOv11 3.57 ms.</p>
 </section>
 
 <section id="data">
 <h2>mini-Trash dataset</h2>
-<p>1006 frames extracted from JAMSTEC J-EDI deep-sea video, 480&times;320, annotated as <i>debris</i>, <i>bio</i> and <i>machine</i>. Split: 603 train / 201 val / 202 test images from 164 / 103 / 119 source clips.</p>
-<figure><img src="img/fig5_example.png" alt="Dataset examples"><figcaption>Examples of images and labels.</figcaption></figure>
-<div class="tblwrap"><table>
-<thead><tr><th>Near-duplicate check (test vs. train)</th><th>Images</th><th>Share</th></tr></thead>
-<tbody>
-<tr><td>Byte-identical to a training image</td><td>0 / 202</td><td>0%</td></tr>
-<tr><td>From a source clip that is also in training</td><td>195 / 202</td><td>96.5%</td></tr>
-<tr><td>Thumbnail correlation &ge; 0.95 with a training image</td><td>49 / 202</td><td>24.3%</td></tr>
-<tr><td>Thumbnail correlation &ge; 0.90 with a training image</td><td>72 / 202</td><td>35.6%</td></tr>
-<tr><td>dHash Hamming distance &le; 5 to a training image</td><td>73 / 202</td><td>36.1%</td></tr>
-</tbody></table></div>
+<p>1006 frames from JAMSTEC J-EDI deep-sea video, 480&times;320, annotated as <i>debris</i>, <i>bio</i> and <i>machine</i> and split into 603, 201 and 202 images for training, validation and test at the frame level. About 24.3% of the test frames have a near-duplicate in the training set, so the frame-level accuracies are in-distribution results, and on a split by source clip the test mAP50 of all models falls to 43.8 to 54.4%. About 9.6% of the images are also present in TrashCan, which is therefore a second benchmark from the same source.</p>
+<figure><img src="img/fig5_example.png" alt="dataset examples" loading="lazy"><figcaption>Examples of images and labels.</figcaption></figure>
 </section>
 
-<section id="results">
-<h2>Results</h2>
-<h3>Comparison on mini-Trash</h3>
-<div class="tblwrap"><table>
-<thead><tr><th>Model</th><th>P (%)</th><th>R (%)</th><th>mAP50 (%)</th><th>Params (M)</th><th>FLOPs (G)</th></tr></thead>
-<tbody>
-<tr><td>Faster R-CNN (ResNet50)</td><td>75.4</td><td>82.1</td><td>78.5</td><td>41.40</td><td>180.0</td></tr>
-<tr><td>DETR (ResNet-101)</td><td>80.1</td><td>76.8</td><td>81.5</td><td>60.20</td><td>152.0</td></tr>
-<tr><td>Deformable-DETR</td><td>81.5</td><td>78.2</td><td>82.8</td><td>39.80</td><td>173.0</td></tr>
-<tr><td>SSD (VGG16)</td><td>70.4</td><td>75.3</td><td>72.4</td><td>26.30</td><td>61.2</td></tr>
-<tr><td>YOLOv7</td><td>87.2</td><td>82.6</td><td>83.4</td><td>36.60</td><td>104.7</td></tr>
-<tr class="ours"><td>PWST-YOLOv7 (ours)</td><td>90.5</td><td>82.5</td><td>90.2</td><td>37.14</td><td>112.5</td></tr>
-<tr><td>YOLOv5nu</td><td>72.4</td><td>66.5</td><td>71.5</td><td>2.51</td><td>3.59</td></tr>
-<tr><td>YOLOv8n</td><td>81.5</td><td>77.2</td><td>81.0</td><td>3.01</td><td>4.10</td></tr>
-<tr><td>YOLOv11n</td><td>80.2</td><td>75.5</td><td>79.2</td><td>2.59</td><td>3.22</td></tr>
-<tr class="ours"><td>PWST-YOLOv11 (ours)</td><td>86.2</td><td>81.6</td><td>88.1</td><td>2.48</td><td>5.05</td></tr>
-</tbody></table></div>
-<h3>Controlled re-run under one protocol (revision)</h3>
-<p>300 epochs, batch 16, same augmentation, COCO-initialised weights where shapes match; model chosen on the validation split only. The 88.1% / 79.2% above are the previously reported numbers and are <b>not reproduced</b> under this protocol.</p>
-<div class="tblwrap"><table><thead><tr><th>Model</th><th>Params (M)</th><th>GMACs</th><th>val mAP50</th><th>test mAP50</th><th>test mAP50-95</th></tr></thead><tbody>
-<tr><td>YOLOv11n (8 runs)</td><td>2.59</td><td>3.22</td><td>82.6 &plusmn; 1.3</td><td>89.3 &plusmn; 1.1</td><td>60.7 &plusmn; 0.7</td></tr>
-<tr><td>PWST-YOLOv11, original configuration (3 runs)</td><td>2.48</td><td>5.05</td><td>76.6 &plusmn; 1.6</td><td>86.4 &plusmn; 1.0</td><td>50.4 &plusmn; 0.6</td></tr>
-<tr><td>SRAW-TM at P4/P5 (3 runs)</td><td>3.66</td><td>3.56</td><td>82.4 &plusmn; 0.2</td><td>90.6 &plusmn; 0.3</td><td>59.7 &plusmn; 0.9</td></tr>
-<tr><td>SRAW-TM at P4/P5 with early PWAM (3 runs)</td><td>3.67</td><td>3.75</td><td>81.0 &plusmn; 0.4</td><td>89.9 &plusmn; 0.6</td><td>60.3 &plusmn; 0.1</td></tr>
-<tr><td>SRA-only at P4/P5 (3 runs)</td><td>3.25</td><td>3.40</td><td>82.8 &plusmn; 1.1</td><td>90.6 &plusmn; 0.4</td><td>60.9 &plusmn; 0.4</td></tr>
-<tr><td>PWAM-only at P3-P5 (3 runs)</td><td>3.02</td><td>3.46</td><td>83.7 &plusmn; 1.1</td><td>90.0 &plusmn; 1.9</td><td>60.7 &plusmn; 1.5</td></tr>
-<tr><td>WaveMLP token mixing at P3-P5 (3 runs)</td><td>3.21</td><td>3.75</td><td>81.9 &plusmn; 1.5</td><td>89.5 &plusmn; 0.8</td><td>60.8 &plusmn; 1.3</td></tr>
-</tbody></table></div>
-<div class="note"><b>Technical improvement of the revision.</b> A gated input standardization (GIN): the image is standardized per channel and blended with itself by a learnable gate (three parameters, initialized at 0.5, active at training and inference); the rest of YOLOv11n is unchanged (2.59 M parameters). Its effect was tested as a single hypothesis fixed before the runs: with light augmentation and 10 new seeds the mean mAP50 on the nine named corruptions rises from 82.7% to 84.0% (+1.3 pts, Welch p = 0.008, level 0.05), while the clean test mAP50 does not change significantly (&minus;0.1 pts, p = 0.87) and the twelve additional corruptions do not improve (&minus;0.8 pts, p = 0.26). GIN therefore improves robustness and leaves the clean accuracy unchanged. None of the 25 further candidates that were screened (Supplementary Material) improved the clean test mAP50 in a confirmation with new seeds.</div>
-<div class="note"><b>Other revision results.</b> TrashCan, GIN against YOLOv11n, both with light augmentation, seeds 10&ndash;14: test mAP50 76.8 &plusmn; 4.1 against 74.1 &plusmn; 3.7 (Welch p = 0.30); nine named corruptions 54.4 &plusmn; 2.8 against 45.1 &plusmn; 3.7 (p = 0.002). TrashCan re-run of the original configuration (paper recipe, test mAP50, three seeds each): YOLOv11n 63.8 &plusmn; 1.5, PWST-YOLOv11 61.2 &plusmn; 5.7, Welch p = 0.51. All TrashCan runs are listed in Supplementary S8. Clip-level split (test mAP50): YOLOv11n 52.4 &plusmn; 2.2, PWST-YOLOv11 43.8 &plusmn; 1.2 (8 and 3 seeds). Amplitude/phase ablation of the full PWAM inserted at P3-P5 (PWAM-only at P3-P5; test mAP50): full 90.0 &plusmn; 1.9, amplitude only 90.7 &plusmn; 1.2, phase only 88.9 &plusmn; 0.7 (3 seeds each). Latency (NVIDIA GeForce RTX 4070 Ti SUPER, batch 1, 640x640, network forward pass): YOLOv11n 2.77 ms, PWST-YOLOv11 3.57 ms (FP32); no Jetson measurements. Overlap with TrashCan 1.0: 97 of 1006 mini-Trash images (test split: 18 of 202) have an essentially identical counterpart (thumbnail correlation &ge; 0.99), 252 (39) a near-duplicate (&ge; 0.95). AmpMix (light augmentation, 5 seeds each): twelve additional corruptions +2.8 pts (p = 0.014), nine named corruptions +1.6 pts (p = 0.09), clean test mAP50 +0.2 pts (p = 0.74). SRAW-TM at P4/P5 + AmpMix vs. YOLOv11n + AmpMix: +1.8 pts on the twelve additional corruptions (p = 0.075); replication cohort (seeds 5&ndash;9): +2.1 pts (p = 0.072). Relative to YOLOv11n with the paper recipe (8 seeds), AmpMix with light augmentation: test mAP50-95 +3.6 pts (p &lt; 0.001), twelve additional corruptions +6.9 pts (p &lt; 0.001), test mAP50 +0.8 pts (p = 0.12); 3.3 pts of the mAP50-95 difference come from the recipe alone. Pre-registered confirmation with 10 new seeds (clean test mAP50, Bonferroni level 0.0167): SRAW-TM + AmpMix 89.8 &plusmn; 1.1, AmpMix 90.1 &plusmn; 0.9; SRAW-TM + AmpMix vs paper recipe +0.5 pts (p = 0.342), vs light augmentation &minus;0.1 pts (p = 0.796), vs AmpMix &minus;0.3 pts (p = 0.489). The module gains are much smaller than the originally reported ones (88.1 vs 79.2 mAP50), and the original PWST-YOLOv11 configuration is below YOLOv11n.</div>
-</section>
-
-<section id="qual">
-<h2>Qualitative results</h2>
-<figure><img src="img/fig_heatmap.png" alt="Heat maps"><figcaption>Channel-mean feature-map activations of the Head_P4_Medium layer (min&ndash;max normalized, JET colormap). No gradient-based method is used.</figcaption></figure>
-<figure><img src="img/fig_detectionresult.png" alt="Detection results"><figcaption>Detections of YOLOv7, PWST-YOLOv7 and PWST-YOLOv11. The first row is the ground truth; examples were selected for illustration.</figcaption></figure>
+<section id="modules">
+<h2>PWAM and SRAW-TM</h2>
+<p>PWAM represents each feature vector by an amplitude and a phase and aggregates the real and imaginary parts with learnable weights, following the phase-aware token mixing of WaveMLP. It involves no Fourier transform. SRAW-TM follows PWAM with space-reduction attention, in which the keys and values are shortened before the attention. In the ablation inside YOLOv11n under one protocol, no module variant is significantly better than YOLOv11n in mAP50 or mAP50-95.</p>
+<figure><img src="img/fig1_PWAM.png" alt="PWAM" loading="lazy"><figcaption>PWAM. Amplitude and phase are mapped to real and imaginary components and aggregated.</figcaption></figure>
+<figure><img src="img/Fig_Methods.png" alt="SRAW-TM" loading="lazy"><figcaption>SRAW-TM, the transformer module based on PWAM and space-reduction attention.</figcaption></figure>
+<figure><img src="img/fig_yolov11Network.png" alt="PWST-YOLOv11" loading="lazy"><figcaption>PWST-YOLOv11 with the modules of this work.</figcaption></figure>
 </section>
 
 <section id="limits">
 <h2>Limitations</h2>
 <ul>
-<li><b>Frame-level split.</b> Near-duplicate frames link training and test images; results are optimistic for unseen dives. A clip-level split script is provided.</li>
-<li><b>Shared source.</b> TrashCan is built from the same J-EDI imagery and is therefore a second benchmark from the same source, not out-of-domain evidence.</li>
-<li><b>Compute.</b> PWST-YOLOv11 has fewer parameters but 57% more FLOPs than YOLOv11n.</li>
-<li><b>Few seeds.</b> Three to ten seeds per model; the seed standard deviation is about 1&ndash;1.4 points of test mAP50 on 202 test images, so only differences of about 3&ndash;4 points are resolved; smaller effects of the modules cannot be excluded. On TrashCan the seed standard deviation is about 4 points with five seeds per model. The YOLOv7 results are single runs from the earlier version.</li>
-<li><b>Not universal.</b> The module placement was re-designed for YOLOv7 and YOLOv11; a direct insertion into YOLOv26 was unstable.</li>
+<li>The corruptions are synthetic, and the corruption comparison on TrashCan was not fixed before the runs. No model was evaluated on real turbid-water footage of other sites.</li>
+<li>GIN is designed for affine changes of the colour channels and lowers mAP50 under strong JPEG compression.</li>
+<li>mini-Trash was split at the frame level, and part of its images are also present in TrashCan, so neither benchmark measures generalization to new sites.</li>
+<li>The seed standard deviation of test mAP50 is about 1.1 points on the 202 mini-Trash test images and about 4 points on TrashCan, so small effects of the modules can neither be established nor excluded.</li>
+<li>PWST-YOLOv11 has 57% more GMACs than YOLOv11n, and no embedded platform was measured.</li>
 </ul>
 </section>
 
@@ -167,6 +177,7 @@ python train.py --cfg configs/x_gin5.yaml --data data.yaml --name x_gin5_lightau
 python scripts/eval_corruptions.py data.yaml robust.json x_gin5_la_s90=runs/x_gin5_lightaug_s90/weights/best.pt
 python scripts/analyze_gin.py                                  # the pre-registered test from the raw results</pre>
 </section>
+
 </main>
 
 <footer><div class="wrap">PWST-YOLO project page &middot; contact: zhou_hexiong@sjtu.edu.cn &middot; Supported by NKRDP 2023YFC2811103 and NSFC 42406183, 42576194.</div></footer>

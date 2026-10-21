@@ -5,7 +5,7 @@ without workstation paths).
 
 Recipe: COCO-pretrained YOLOv11n initialization (yolo11n.pt; weights of layers whose shapes match are loaded, the detection head is re-initialized),
 300 epochs, early-stopping patience 100, batch 16, 640 x 640, Ultralytics default optimizer selection, mosaic 1.0 (closed in the last 10 epochs, the default),
-flipud/fliplr 0.5; the paper recipe uses mixup 0.5 and shear 20, --light-aug sets both to 0.
+flipud/fliplr 0.5; full augmentation (the default) uses mixup 0.5 and shear 20, and light augmentation (--light-aug) sets both to 0.
 After training the best checkpoint (by validation fitness) is evaluated on the validation and the test split and the result is appended to <project>/summary.jsonl.
 The Ultralytics installation must contain the modules (see README: patch ultralytics_patch/pwst_ultralytics.patch)."""
 import argparse

@@ -1,0 +1,16 @@
+{
+ "images": [
+  "bio0013_frame0000012.jpg",
+  "obj0228_frame0000020.jpg",
+  "obj1016_frame0000073.jpg",
+  "obj1624_frame0000413.jpg"
+ ],
+ "columns": [
+  "image with ground truth",
+  "yolo11n_base_s0",
+  "pw_D_sra57_s0",
+  "pw_A_sraw57_s0",
+  "pwst_v7final_s0",
+  "x_gin5_lightaug_s90"
+ ]
+}

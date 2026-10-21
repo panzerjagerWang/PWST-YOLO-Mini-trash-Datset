@@ -1,0 +1,105 @@
+{
+ "corruption": "haze_0.6",
+ "test_images_with_objects": 705,
+ "objects": 1266,
+ "seeds": {
+  "BASE": 5,
+  "GIN": 5
+ },
+ "images_gin_more": 406,
+ "images_gin_fewer": 47,
+ "detected_share_base": 40.07898894154818,
+ "detected_share_gin": 55.52922590837283,
+ "fp_per_image_base": 0.6428368794326241,
+ "fp_per_image_gin": 0.5608510638297872,
+ "images_gin_more_first_seed": 179,
+ "images_gin_fewer_first_seed": 46,
+ "images": [
+  "vid_000050_frame0000024.jpg",
+  "vid_000108_frame0000031.jpg",
+  "vid_000146_frame0000007.jpg",
+  "vid_000214_frame0000017.jpg",
+  "vid_000288_frame0000014.jpg",
+  "vid_000435_frame0000008.jpg"
+ ],
+ "per_image": {
+  "vid_000050_frame0000024.jpg": {
+   "gt": 2,
+   "base": [
+    0,
+    0,
+    2
+   ],
+   "gin": [
+    1,
+    1,
+    1
+   ]
+  },
+  "vid_000108_frame0000031.jpg": {
+   "gt": 5,
+   "base": [
+    3,
+    0,
+    2
+   ],
+   "gin": [
+    4,
+    1,
+    1
+   ]
+  },
+  "vid_000146_frame0000007.jpg": {
+   "gt": 2,
+   "base": [
+    1,
+    0,
+    1
+   ],
+   "gin": [
+    2,
+    0,
+    0
+   ]
+  },
+  "vid_000214_frame0000017.jpg": {
+   "gt": 6,
+   "base": [
+    2,
+    4,
+    4
+   ],
+   "gin": [
+    4,
+    4,
+    2
+   ]
+  },
+  "vid_000288_frame0000014.jpg": {
+   "gt": 1,
+   "base": [
+    0,
+    0,
+    1
+   ],
+   "gin": [
+    1,
+    0,
+    0
+   ]
+  },
+  "vid_000435_frame0000008.jpg": {
+   "gt": 1,
+   "base": [
+    0,
+    1,
+    1
+   ],
+   "gin": [
+    1,
+    1,
+    0
+   ]
+  }
+ }
+}

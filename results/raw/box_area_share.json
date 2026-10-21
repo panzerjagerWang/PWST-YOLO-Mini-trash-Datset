@@ -1,0 +1,1 @@
+{"mean_percent": 24.2, "median_percent": 19.1, "n_images": 202, "note": "share of the image area covered by the union of the ground-truth boxes, mini-Trash test split, computed on the workstation from the label files"}
