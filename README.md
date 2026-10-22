@@ -6,7 +6,7 @@ Code, weights and reproduction material for the manuscript
 > Jiaqing Wang, Baichuan Zeng, Hexiong Zhou\*, Zheng Zeng\* (Shanghai Jiao Tong University; The Chinese University of Hong Kong)
 > submitted to *IEEE Journal of Oceanic Engineering* (manuscript 26-0110)
 
-**Project page:** https://panzerjagerwang.github.io/PWST-YOLO-Mini-trash-Datset/ &nbsp;·&nbsp; **Weights:** [Releases](../../releases) &nbsp;·&nbsp; **Supplementary material:** [`docs/supplementary.pdf`](docs/supplementary.pdf)
+**Project page:** https://panzerjagerwang.github.io/PWST-YOLO-Mini-trash-Datset/ &nbsp;·&nbsp; **Weights and mini-Trash dataset:** [Releases](../../releases) &nbsp;·&nbsp; **Supplementary material:** [`docs/supplementary.pdf`](docs/supplementary.pdf)
 
 ## What this repository shows
 
@@ -69,7 +69,7 @@ PY
 
 ## Reproduce the experiments
 
-**Data.** mini-Trash (1006 frames from J-EDI, classes *debris*, *bio*, *machine*; 603 / 201 / 202 images for training / validation / test, split at the frame level) in YOLO format with a `data.yaml` (`train: train/images`, `val: val/images`, `test: test/images`). The frames are derived from the JAMSTEC J-EDI archive; please check the J-EDI terms of use before redistributing images. The split analysis scripts need the image folders.
+**Data.** mini-Trash is `mini-Trash.zip` in the [Releases](../../releases): 1006 frames from J-EDI, classes *debris*, *bio*, *machine*, 603 / 201 / 202 images for training / validation / test, split at the frame level, in YOLO format with a `data.yaml`. The images are frames of JAMSTEC J-EDI deep-sea video, and their use is subject to the J-EDI terms of use; please cite J-EDI and the paper. The split analysis scripts need the image folders.
 
 **Train GIN and its baseline** (the recipe of the paper: 300 epochs, patience 100, batch 16, 640 px, COCO-pretrained YOLOv11n initialization; `--light-aug` removes mixup and shear):
 
